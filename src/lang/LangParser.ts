@@ -1,26 +1,27 @@
 /**
  * Created by Raykid on 2017/3/16.
  */
-import fs = require("fs");
+import * as fs from "fs";
 
-export function parseConfig(root:string, langStr:string):Config
+export function parseConfig(root:string, langStr:string):Lang
 {
     let configStr:string = fs.readFileSync(root + "/configs/" + langStr + "/config.json", "utf-8");
-    let config:Config = JSON.parse(configStr);
+    let config:Lang = JSON.parse(configStr);
+    config.name = langStr;
     // 解析types，将from变为正则表达式
     let regStr:RegExp = /^[a-zA-Z0-9_]+$/;
-    for(let type:ConfigType of config.types)
+    for(let type of config.types)
     {
         // 如果from属性是正则字符串，则直接转变为正则表达式对象
         if(!regStr.test(type.from as string))
         {
-            type.from = new RegExp(type.from);
+            type.from = new RegExp(type.from as string);
         }
         // 填充默认的customNames
         type.customNames = [];
     }
     // 解析templates，将file指向的文件内容加载进来替换file属性
-    for(let template:ConfigTemplate of config.templates)
+    for(let template of config.templates)
     {
         template.file = fs.readFileSync(root + "/configs/" + langStr + "/" + template.file, "utf-8");
     }
@@ -28,13 +29,14 @@ export function parseConfig(root:string, langStr:string):Config
     return config;
 }
 
-export interface Config
+export interface Lang
 {
-    types:ConfigType[];
-    templates:ConfigTemplate[];
+    name:string;
+    types:LangType[];
+    templates:LangTemplate[];
 }
 
-export interface ConfigType
+export interface LangType
 {
     from:string|RegExp;
     to:string;
@@ -42,7 +44,7 @@ export interface ConfigType
     customNames:string[];
 }
 
-export interface ConfigTemplate
+export interface LangTemplate
 {
     field:string;
     file:string;

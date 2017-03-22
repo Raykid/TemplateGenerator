@@ -1,27 +1,27 @@
 /**
  * Created by Raykid on 2017/3/20.
  */
-import ares = require("../../libs/ares.js");
-import ares_template = require("../../libs/ares_template.js");
 import langParser = require("../lang/LangParser");
 import configParser = require("../config/ConfigParser");
+var ares = require("../../libs/ares.js");
+var ares_template = require("../../libs/ares_template.js");
 
 export function replaceTemplate(
-    typeDict:langParser.ConfigType[],
-    template:langParser.ConfigTemplate,
+    typeDict:langParser.LangType[],
+    template:langParser.LangTemplate,
     conf:{[key:string]:any}):TemplateResult
 {
     // 复制一份conf，将其中的类型改了
-    let newConf = {};
-    for(let key:string in conf)
+    let newConf:any = {};
+    for(let key in conf)
     {
         var value:any = conf[key];
         if(key == "fields")
         {
             // 需要将fields里面的所有类型进行一次转换
             value = value.map(field=>{
-                let newField:configParser.ConfigField = {};
-                for(let key:string in field)
+                let newField:any = {};
+                for(let key in field)
                 {
                     newField[key] = field[key];
                 }
@@ -38,7 +38,10 @@ export function replaceTemplate(
     newConf.removeDuplicate = removeDuplicate;
     newConf.transformType = transformType;
     // 准备结果
-    let res:TemplateResult = {};
+    let res:TemplateResult = {
+        saveName: null,
+        content: null
+    };
     // 替换文件名
     ares.bind(newConf, new ares_template.TemplateCompiler(template.saveName, (text:string)=>{
         res.saveName = text;
@@ -54,14 +57,14 @@ export function replaceTemplate(
     function getCustomNames(fields:configParser.ConfigField[]):string[]
     {
         let customNames:string[] = [];
-        for(let field:configParser.ConfigField of fields)
+        for(let field of fields)
         {
             customNames = customNames.concat(field.type.customNames);
         }
         return removeDuplicate(customNames);
     }
 
-    function removeDuplicate(list:T[]):T[]
+    function removeDuplicate<T>(list:T[]):T[]
     {
         let tempList:T[] = [];
         for(var i:number = 0, len:number = list.length; i < len; i++)
@@ -78,9 +81,9 @@ export function replaceTemplate(
         return list;
     }
 
-    function transformType(type:string):langParser.ConfigType
+    function transformType(type:string):langParser.LangType
     {
-        for(let conf:langParser.ConfigType of typeDict)
+        for(let conf of typeDict)
         {
             if(conf.from == type)
             {
@@ -99,7 +102,7 @@ export function replaceTemplate(
                     for(var i:number = 1, len:number = res.length; i < len; i++)
                     {
                         let before:string = res[i];
-                        var subType:langParser.ConfigType = transformType(before);
+                        var subType:langParser.LangType = transformType(before);
                         let after:string = subType.to;
                         let index:number = tempStr.indexOf(before);
                         let count:number = before.length;

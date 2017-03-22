@@ -1,10 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by Raykid on 2017/3/16.
  */
-var fs = require("fs");
+const fs = require("fs");
 function parseConfig(root, langStr) {
     let configStr = fs.readFileSync(root + "/configs/" + langStr + "/config.json", "utf-8");
     let config = JSON.parse(configStr);
+    config.name = langStr;
     // 解析types，将from变为正则表达式
     let regStr = /^[a-zA-Z0-9_]+$/;
     for (let type of config.types) {

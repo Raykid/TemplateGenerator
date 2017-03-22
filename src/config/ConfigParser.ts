@@ -1,30 +1,31 @@
 /**
  * Created by Raykid on 2017/3/17.
  */
-import ares = require("../../libs/ares.js");
-import ares_template = require("../../libs/ares_template.js");
-import fs = require("fs");
+import * as fs from "fs";
+var ares = require("../../libs/ares.js");
+var ares_template = require("../../libs/ares_template.js");
 
 export function parserConfig(root:string):ConfigDict
 {
-    var confDict:ConfigDict = {};
+    let confDict:ConfigDict = {};
     // 加载文件
     let files:string[] = fs.readdirSync(root + "/messages");
-    for(let fileName:string of files)
+    for(let fileName of files)
     {
         // 将所有文件中的配置整合到一起
         let str:string = fs.readFileSync(root + "/messages/" + fileName, "utf-8");
         let tempConfDict:TempConfigDict = JSON.parse(str);
-        for(let field:string in tempConfDict)
+        for(let field in tempConfDict)
         {
             let tempConf:TempConfig = tempConfDict[field];
             let confs:Config[] = confDict[field];
             if(!confs) confDict[field] = confs = [];
             // 遍历所有extra，每个extra生成一个Config对象
-            for(let exConf:Config of tempConf.extra)
+            for(let exConf of tempConf.extra)
             {
                 // 首先用default初始化一个Config
-                var conf:Config = copyConfig(tempConf.default, {fields: []});
+                var temp:any = {fields: []};
+                var conf:Config = copyConfig(tempConf.default, temp);
                 // 再用exConf中的字段覆盖之
                 conf = copyConfig(exConf, conf);
                 // 推入conf数组
@@ -34,12 +35,12 @@ export function parserConfig(root:string):ConfigDict
     }
     // 如果conf内容中间有->符号，则表示要使用配置中的某项替换
     var regConf:RegExp = /^([a-zA-Z0-9_]+)\->([a-zA-Z0-9_]+)$/;
-    for(let field:string in confDict)
+    for(let field in confDict)
     {
         let confs:Config[] = confDict[field];
-        for(let conf:Config of confs)
+        for(let conf of confs)
         {
-            for(let key:string in conf)
+            for(let key in conf)
             {
                 let value:any = conf[key];
                 if(typeof value == "string")
@@ -54,7 +55,7 @@ export function parserConfig(root:string):ConfigDict
                     {
                         // 需要替换引用
                         let tempConfs:Config[] = confDict[res[1]];
-                        for(let tempConf:Config of tempConfs)
+                        for(let tempConf of tempConfs)
                         {
                             if(tempConf.name == res[2])
                             {
@@ -72,7 +73,7 @@ export function parserConfig(root:string):ConfigDict
 
 function copyConfig(tarConfig:Config, oriConfig?:Config):Config
 {
-    if(!oriConfig) oriConfig = {};
+    if(!oriConfig) oriConfig = {} as any;
     for(let key in tarConfig)
     {
         if(key == "fields")
@@ -104,9 +105,7 @@ export interface Config
     /** name属性是特殊的 */
     name:string;
     /** fields属性是特殊的 */
-    fields:{[key:string]:ConfigField}[];
-    /** 其他属性都是自由设置的 */
-    [key:string]:string;
+    fields:ConfigField[];
 }
 
 export interface ConfigField
@@ -115,8 +114,6 @@ export interface ConfigField
     name:string;
     /** field类型 */
     type:any;
-    /** 其他属性都是自由设置的 */
-    [key:string]:string;
 }
 
 interface TempConfigDict

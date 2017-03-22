@@ -1,11 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by Raykid on 2017/3/17.
  */
+const fs = require("fs");
 var ares = require("../../libs/ares.js");
 var ares_template = require("../../libs/ares_template.js");
-var fs = require("fs");
 function parserConfig(root) {
-    var confDict = {};
+    let confDict = {};
     // 加载文件
     let files = fs.readdirSync(root + "/messages");
     for (let fileName of files) {
@@ -20,7 +22,8 @@ function parserConfig(root) {
             // 遍历所有extra，每个extra生成一个Config对象
             for (let exConf of tempConf.extra) {
                 // 首先用default初始化一个Config
-                var conf = copyConfig(tempConf.default, { fields: [] });
+                var temp = { fields: [] };
+                var conf = copyConfig(tempConf.default, temp);
                 // 再用exConf中的字段覆盖之
                 conf = copyConfig(exConf, conf);
                 // 推入conf数组

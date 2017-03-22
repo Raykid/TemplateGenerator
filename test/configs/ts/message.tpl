@@ -3,7 +3,6 @@ namespace $a-{pkg}
     $a-{for: name in getCustomNames(fields)}
     import $a-{name} = $a-{fieldPkg}.$a-{name};
     $a-{end for}
-
 	/**
 	 * $a-{comment}
 	 */

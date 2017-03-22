@@ -60,7 +60,7 @@
     {
       "field": "message",
       "file": "message.tpl",
-      "saveName": "$a-{name}Message.ts"
+      "saveName": "messages/$a-{name}Message.ts"
     }
   ]
 }

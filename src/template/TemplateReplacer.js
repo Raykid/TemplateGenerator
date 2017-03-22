@@ -1,6 +1,5 @@
-/**
- * Created by Raykid on 2017/3/20.
- */
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ares = require("../../libs/ares.js");
 var ares_template = require("../../libs/ares_template.js");
 function replaceTemplate(typeDict, template, conf) {
@@ -28,7 +27,10 @@ function replaceTemplate(typeDict, template, conf) {
     newConf.removeDuplicate = removeDuplicate;
     newConf.transformType = transformType;
     // 准备结果
-    let res = {};
+    let res = {
+        saveName: null,
+        content: null
+    };
     // 替换文件名
     ares.bind(newConf, new ares_template.TemplateCompiler(template.saveName, (text) => {
         res.saveName = text;
