@@ -25,8 +25,6 @@ module.exports = {
                 warnings: false
             },
             output: {
-				path: path.resolve(__dirname, '../dist'),
-				filename: 'TemplateGenerator.min.js'，
                 comments: false
             }
         })

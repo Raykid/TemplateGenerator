@@ -71,11 +71,22 @@ var ares;
                 context.entity.createWatcher(context.node, res[2], context.scope, function (value) {
                     var result = "";
                     if (value) {
-                        for (var i = 0, len = value.length; i < len; i++) {
+                        for (var key in value) {
                             // 生成子域
                             var newScope = Object.create(context.scope);
-                            newScope.$index = i;
-                            newScope[res[1]] = value[i];
+                            // 这里一定要用defineProperty将目标定义在当前节点上，否则会影响context.scope
+                            Object.defineProperty(newScope, "$index", {
+                                configurable: true,
+                                enumerable: false,
+                                value: key,
+                                writable: false
+                            });
+                            Object.defineProperty(newScope, res[1], {
+                                configurable: true,
+                                enumerable: true,
+                                value: value[key],
+                                writable: false
+                            });
                             // 编译子节点并显示
                             compileChildren(context.node, newScope, context.compiler);
                             // 更新值

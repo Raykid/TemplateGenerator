@@ -4,15 +4,15 @@ var ares = require("../../libs/ares.js");
 var ares_template = require("../../libs/ares_template.js");
 function replaceTemplate(typeDict, template, conf) {
     // 复制一份conf，将其中的类型改了
-    let newConf = {};
-    for (let key in conf) {
+    var newConf = {};
+    for (var key in conf) {
         var value = conf[key];
         if (key == "fields") {
             // 需要将fields里面的所有类型进行一次转换
-            value = value.map(field => {
-                let newField = {};
-                for (let key in field) {
-                    newField[key] = field[key];
+            value = value.map(function (field) {
+                var newField = {};
+                for (var key_1 in field) {
+                    newField[key_1] = field[key_1];
                 }
                 // 特别处理type属性
                 newField.oriType = newField.type;
@@ -27,32 +27,33 @@ function replaceTemplate(typeDict, template, conf) {
     newConf.removeDuplicate = removeDuplicate;
     newConf.transformType = transformType;
     // 准备结果
-    let res = {
+    var res = {
         saveName: null,
         content: null
     };
     // 替换文件名
-    ares.bind(newConf, new ares_template.TemplateCompiler(template.saveName, (text) => {
+    ares.bind(newConf, new ares_template.TemplateCompiler(template.saveName, function (text) {
         res.saveName = text;
     }));
     // 替换内容
-    ares.bind(newConf, new ares_template.TemplateCompiler(template.file, (text) => {
+    ares.bind(newConf, new ares_template.TemplateCompiler(template.file, function (text) {
         res.content = text;
     }));
     // 返回结果
     return res;
     /**************** 下面是工具方法 ****************/
     function getCustomNames(fields) {
-        let customNames = [];
-        for (let field of fields) {
+        var customNames = [];
+        for (var _i = 0, fields_1 = fields; _i < fields_1.length; _i++) {
+            var field = fields_1[_i];
             customNames = customNames.concat(field.type.customNames);
         }
         return removeDuplicate(customNames);
     }
     function removeDuplicate(list) {
-        let tempList = [];
+        var tempList = [];
         for (var i = 0, len = list.length; i < len; i++) {
-            let item = list[i];
+            var item = list[i];
             if (tempList.indexOf(item) >= 0) {
                 list.splice(i, 1);
                 i--;
@@ -63,24 +64,25 @@ function replaceTemplate(typeDict, template, conf) {
         return list;
     }
     function transformType(type) {
-        for (let conf of typeDict) {
-            if (conf.from == type) {
-                return conf;
+        for (var _i = 0, typeDict_1 = typeDict; _i < typeDict_1.length; _i++) {
+            var conf_1 = typeDict_1[_i];
+            if (conf_1.from == type) {
+                return conf_1;
             }
-            else if (conf.from instanceof RegExp) {
-                var res = conf.from.exec(type);
+            else if (conf_1.from instanceof RegExp) {
+                var res = conf_1.from.exec(type);
                 if (res) {
-                    let customNames = [];
-                    let tempStrs = [];
-                    let tempStr = res[0];
+                    var customNames = [];
+                    var tempStrs = [];
+                    var tempStr = res[0];
                     // 将整个段落的前面部分推入数组
                     tempStrs.push(type.substring(0, res.index));
                     for (var i = 1, len = res.length; i < len; i++) {
-                        let before = res[i];
+                        var before = res[i];
                         var subType = transformType(before);
-                        let after = subType.to;
-                        let index = tempStr.indexOf(before);
-                        let count = before.length;
+                        var after = subType.to;
+                        var index = tempStr.indexOf(before);
+                        var count = before.length;
                         // 将before前面的部分推入数组
                         tempStrs.push(tempStr.substring(0, index));
                         // 将after推入数组
@@ -97,11 +99,11 @@ function replaceTemplate(typeDict, template, conf) {
                     // 将整个段落的后面部分推入数组
                     tempStrs.push(type.substr(res.index + res[0].length));
                     // 使用连接起来的字符串进行替换
-                    let newType = tempStrs.join("");
+                    var newType = tempStrs.join("");
                     return {
                         from: type,
-                        to: newType.replace(conf.from, conf.to),
-                        class: conf.class,
+                        to: newType.replace(conf_1.from, conf_1.to),
+                        class: conf_1.class,
                         customNames: customNames
                     };
                 }

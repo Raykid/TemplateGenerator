@@ -3,15 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by Raykid on 2017/3/21.
  */
-const fs = require("fs");
-const path = require("path");
+var fs = require("fs");
+var path = require("path");
 function deleteFolder(url, delSelf) {
     //判断给定的路径是否存在
     var exists = fs.existsSync(url);
     if (exists) {
         //返回文件和子目录的数组
         var files = fs.readdirSync(url);
-        files.forEach((file) => {
+        files.forEach(function (file) {
             var curPath = path.join(url, file);
             if (fs.statSync(curPath).isDirectory())
                 //fs.statSync同步读取文件夹文件，如果是文件夹，递归调用函数
