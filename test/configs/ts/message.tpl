@@ -6,7 +6,7 @@ $a-{end for}
 /**
  * Created by TemplateGenerator.
  */
-namespace net.messages
+namespace net.message
 {
     import $a-{response.name} = $a-{response.pkg}.$a-{response.name};
     $a-{for: name in getCustomNames(fields)}
