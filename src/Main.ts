@@ -19,10 +19,12 @@ let out:string = args[1];
 // 首先读取语言配置
 var langs:string[] = args.slice(2);
 let langConfigs:langParser.Lang[] = langParser.parseConfig(root, langs);
+// 日志
+console.log(`语言配置读取完毕`);
 // 其次读取消息配置
 let tempConfig:configParser.ConfigDict = configParser.parserConfig(root);
 // 日志
-console.log(`读取消息配置成功`);
+console.log(`消息配置读取完毕`);
 // 重建out文件夹
 fileSystemUtil.emptyFolder(out);
 // 最后遍历进行替换

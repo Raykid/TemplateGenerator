@@ -17,10 +17,12 @@ var out = args[1];
 // 首先读取语言配置
 var langs = args.slice(2);
 var langConfigs = langParser.parseConfig(root, langs);
+// 日志
+console.log("\u8BED\u8A00\u914D\u7F6E\u8BFB\u53D6\u5B8C\u6BD5");
 // 其次读取消息配置
 var tempConfig = configParser.parserConfig(root);
 // 日志
-console.log("\u8BFB\u53D6\u6D88\u606F\u914D\u7F6E\u6210\u529F");
+console.log("\u6D88\u606F\u914D\u7F6E\u8BFB\u53D6\u5B8C\u6BD5");
 // 重建out文件夹
 fileSystemUtil.emptyFolder(out);
 // 最后遍历进行替换
