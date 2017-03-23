@@ -113,7 +113,7 @@ export function replaceTemplate(
                     from: conf.from,
                     to: conf.to,
                     class: conf.class,
-                    isCustom: false,
+                    customName: null,
                     customTypes: []
                 };
             }
@@ -125,7 +125,7 @@ export function replaceTemplate(
                     let customTypes:langParser.LangType[] = [];
                     let tempStrs:string[] = [];
                     let tempStr:string = res[0];
-                    let isCustom:boolean = false;
+                    let customName:string = null;
                     // 将整个段落的前面部分推入数组
                     tempStrs.push(type.substring(0, res.index));
                     for(let i:number = 1, len:number = res.length; i < len; i++)
@@ -144,9 +144,9 @@ export function replaceTemplate(
                         // 连接customTypes
                         customTypes = customTypes.concat(subType.customTypes);
                         // 如果subType是customType则将其推入数组
-                        if(subType.isCustom) customTypes.push(subType);
+                        if(subType.customName != null) customTypes.push(subType);
                         // 计算自身的isCustom属性，需要递归地将所有子类型都做或运算
-                        isCustom = isCustom || transformType(before).isCustom;
+                        customName = customName || transformType(before).customName;
                     }
                     // 将customTypes做一次去重
                     customTypes = removeDuplicate(customTypes);
@@ -160,7 +160,7 @@ export function replaceTemplate(
                         from: type,
                         to: newType.replace(conf.from, conf.to),
                         class: conf.class,
-                        isCustom: isCustom,
+                        customName: customName,
                         customTypes: customTypes
                     };
                 }
@@ -171,7 +171,7 @@ export function replaceTemplate(
             from: type,
             to: type,
             class: "custom",
-            isCustom: true,
+            customName: type,
             customTypes: []
         };
     }

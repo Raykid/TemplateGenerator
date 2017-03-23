@@ -8,46 +8,60 @@ namespace net.message
 	{
 		/** 测试byte类型 */
         public testByte:number;
-false
+
+    undefined
 		/** 测试short类型 */
         public testShort:number;
-false
+
+    undefined
 		/** 测试int类型 */
         public testInt:number;
-false
+
+    undefined
 		/** 测试long类型 */
         public testLong:string;
-false
+
+    undefined
 		/** 测试float类型 */
         public testFloat:number;
-false
+
+    undefined
 		/** 测试double类型 */
         public testDouble:number;
-false
+
+    undefined
 		/** 测试string类型 */
         public testString:string;
-false
+
+    undefined
 		/** 测试boolean类型 */
         public testBoolean:boolean;
-false
+
+    undefined
 		/** 测试any类型 */
         public testAny:any;
-false
+
+    undefined
 		/** 测试简单类型数组 */
         public testArray:number[] = [];
-false
+
+    undefined
 		/** 测试简单类型表 */
         public testMap:{[key:string]:number} = {};
-false
+
+    undefined
 		/** 测试复杂类型 */
         public other:OtherVO1 = new OtherVO1();
-true
+
+    OtherVO1
 		/** 测试复杂类型数组 */
         public others:OtherVO1[] = [];
-true
+
+    OtherVO1
 		/** 测试复杂类型表 */
         public otherMap:{[key:string]:OtherVO1} = {};
-true
+
+    OtherVO1
 		public constructor()
 		{
 			super(MessageType.GetGrayInfo1);

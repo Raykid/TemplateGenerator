@@ -87,7 +87,7 @@ function replaceTemplate(typeDict, template, confDict, conf) {
                     from: conf_2.from,
                     to: conf_2.to,
                     class: conf_2.class,
-                    isCustom: false,
+                    customName: null,
                     customTypes: []
                 };
             }
@@ -97,7 +97,7 @@ function replaceTemplate(typeDict, template, confDict, conf) {
                     var customTypes = [];
                     var tempStrs = [];
                     var tempStr = res_1[0];
-                    var isCustom = false;
+                    var customName = null;
                     // 将整个段落的前面部分推入数组
                     tempStrs.push(type.substring(0, res_1.index));
                     for (var i = 1, len = res_1.length; i < len; i++) {
@@ -115,10 +115,10 @@ function replaceTemplate(typeDict, template, confDict, conf) {
                         // 连接customTypes
                         customTypes = customTypes.concat(subType.customTypes);
                         // 如果subType是customType则将其推入数组
-                        if (subType.isCustom)
+                        if (subType.customName != null)
                             customTypes.push(subType);
                         // 计算自身的isCustom属性，需要递归地将所有子类型都做或运算
-                        isCustom = isCustom || transformType(before).isCustom;
+                        customName = customName || transformType(before).customName;
                     }
                     // 将customTypes做一次去重
                     customTypes = removeDuplicate(customTypes);
@@ -132,7 +132,7 @@ function replaceTemplate(typeDict, template, confDict, conf) {
                         from: type,
                         to: newType.replace(conf_2.from, conf_2.to),
                         class: conf_2.class,
-                        isCustom: isCustom,
+                        customName: customName,
                         customTypes: customTypes
                     };
                 }
@@ -143,7 +143,7 @@ function replaceTemplate(typeDict, template, confDict, conf) {
             from: type,
             to: type,
             class: "custom",
-            isCustom: true,
+            customName: type,
             customTypes: []
         };
     }
