@@ -68,7 +68,7 @@ export function replaceTemplate(
                     return conf;
             }
         }
-        return null;
+        return {} as any;
     }
 
     function getCustomTypes(fields:configParser.ConfigField[]):langParser.LangType[]

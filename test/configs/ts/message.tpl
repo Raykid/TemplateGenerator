@@ -1,9 +1,20 @@
-namespace net.message
+/// <reference path="../$a-{getConfigByName(response.name).field}/$a-{response.name}.ts"/>
+$a-{for: type in getCustomTypes(fields)}
+/// <reference path="../$a-{getConfigByName(type.to).field}/$a-{type.to}.ts"/>
+$a-{end for}
+
+/**
+ * Created by TemplateGenerator.
+ */
+namespace net.messages
 {
+    import $a-{response.name} = $a-{response.pkg}.$a-{response.name};
     $a-{for: type in getCustomTypes(fields)}
     import $a-{type.to} = net.$a-{getConfigByName(type.to).field}.$a-{type.to};
     $a-{end for}
+	
 	/**
+	 * $a-{name}消息体
 	 * $a-{comment}
 	 */
 	export class $a-{name}Message extends vox.net.BaseRequestMessage
@@ -39,6 +50,31 @@ namespace net.message
 		public __useGet(): Boolean
 		{
 			return $a-{method == "GET"};
+		}
+	}
+	
+	/**
+	 * $a-{name}命令体
+	 * $a-{comment}
+	 */
+	export class $a-{name}Command extends vox.net.BaseRequestCommand
+	{
+		public exec():void
+		{
+			this.getMessage().__data = {
+				$a-{for: field in fields}
+				$a-{field.name}: msg.$a-{field.name}$a-{if: $index < fields.length - 1},$a-{end if}// $a-{field.type.to} - $a-{field.comment}
+				$a-{end for}
+			};
+			super.exec();
+		}
+		
+		public parseResponse(result:any):$a-{response.name}
+		{
+            var response:$a-{response.name} = new $a-{response.name}();
+			response.success = result["success"];
+            response.parse(result);
+			return response;
 		}
 	}
 }

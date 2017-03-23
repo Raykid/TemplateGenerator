@@ -58,15 +58,27 @@
   ],
   "templates": [
     {
+      "field": "global",
+      "file": "MessageType.tpl",
+      "saveName": "MessageType.ts"
+    },
+    {
       "field": "message",
       "file": "message.tpl",
-      "saveName": "messages/$a-{name}Message.ts"
+      "saveName": "$a-{field}/$a-{name}Message.ts"
+    },
+    {
+      "field": "response",
+      "file": "type.tpl",
+      "saveName": "$a-{field}/$a-{name}.ts"
+    },
+    {
+      "field": "type",
+      "file": "type.tpl",
+      "saveName": "$a-{field}/$a-{name}.ts"
     }
   ],
   "include": [
-	"others.json"
-  ],
-  "exclude": [
-	"fuck.json"
+	"messages.json"
   ]
 }

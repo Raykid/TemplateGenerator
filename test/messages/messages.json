@@ -1,199 +1,699 @@
 {
-  "message": {
-    "default": {
-      "pkg": "net.messages",
-      "fieldPkg": "net.types",
-      "comment": "",
-      "method": "GET",
-      "response": "response->$a-{name}Response",
-      "domainIndex": 0
-    },
-    "extra": [
-      {
-        "name": "HomeIndex",
-        "comment": "首页消息",
-        "url": "/afenti/api/login.vpage"
-      },
-      {
-        "name": "GetPopupInfo",
-        "comment": "弹窗",
-        "url": "/afenti/api/popup.vpage",
-        "response": "response->Empty"
-      },
-      {
-        "name": "GetGrayInfo",
-        "url": "/afenti/api/gray.vpage",
-        "method": "POST",
-        "response": "response->Empty",
-        "comment": "这是一个十足的测试消息",
-        "fields": [
-          {
-            "name": "testByte",
-            "type": "byte",
-            "comment": "测试byte类型"
-          },
-          {
-            "name": "testShort",
-            "type": "short",
-            "comment": "测试short类型"
-          },
-          {
-            "name": "testInt",
-            "type": "int",
-            "comment": "测试int类型"
-          },
-          {
-            "name": "testLong",
-            "type": "long",
-            "comment": "测试long类型"
-          },
-          {
-            "name": "testFloat",
-            "type": "float",
-            "comment": "测试float类型"
-          },
-          {
-            "name": "testDouble",
-            "type": "double",
-            "comment": "测试double类型"
-          },
-          {
-            "name": "testString",
-            "type": "string",
-            "comment": "测试string类型"
-          },
-          {
-            "name": "testBoolean",
-            "type": "boolean",
-            "comment": "测试boolean类型"
-          },
-          {
-            "name": "testAny",
-            "type": "any",
-            "comment": "测试any类型"
-          },
-          {
-            "name": "testArray",
-            "type": "int[]",
-            "comment": "测试简单类型数组"
-          },
-          {
-            "name": "testMap",
-            "type": "{string:int}",
-            "comment": "测试简单类型表"
-          },
-          {
-            "name": "other",
-            "type": "OtherVO",
-            "comment": "测试复杂类型"
-          },
-          {
-            "name": "others",
-            "type": "OtherVO[]",
-            "comment": "测试复杂类型数组"
-          },
-          {
-            "name": "otherMap",
-            "type": "{string:OtherVO}",
-            "comment": "测试复杂类型表"
-          }
-        ]
-      }
-    ]
-  },
-  "response": {
-    "default": {
-      "comment": "",
-      "pkg": "net.response",
-      "fieldPkg": "net.types"
-    },
-    "extra": [
-      {
-        "name": "Empty"
-      },
-      {
-        "name": "HomeIndexResponse",
-        "fields": [
-          {
-            "name": "testByte",
-            "type": "byte",
-            "comment": "测试byte类型"
-          },
-          {
-            "name": "testShort",
-            "type": "short"
-          },
-          {
-            "name": "testInt",
-            "type": "int"
-          },
-          {
-            "name": "testLong",
-            "type": "long"
-          },
-          {
-            "name": "testFloat",
-            "type": "float"
-          },
-          {
-            "name": "testDouble",
-            "type": "double"
-          },
-          {
-            "name": "testString",
-            "type": "string"
-          },
-          {
-            "name": "testBoolean",
-            "type": "boolean"
-          },
-          {
-            "name": "testAny",
-            "type": "any"
-          },
-          {
-            "name": "testArray",
-            "type": "int[]"
-          },
-          {
-            "name": "testMap",
-            "type": "{string:}"
-          },
-          {
-            "name": "other",
-            "type": "OtherVO",
-            "comment": "测试复杂类型"
-          },
-          {
-            "name": "others",
-            "type": "OtherVO[]",
-            "comment": "测试复杂类型数组"
-          },
-          {
-            "name": "otherMap",
-            "type": "{string:OtherVO}",
-            "comment": "测试复杂类型表"
-          }
-        ]
-      }
-    ]
-  },
-  "type": {
-    "default": {
-      "comment": "",
-      "pkg": "net.types",
-      "fieldPkg": "net.types"
-    },
-    "extra": [
-      {
-        "name": "OtherVO",
-        "fields": [
-          {
-            "name": "fuck",
-            "type": "string"
-          }
-        ]
-      }
-    ]
-  }
+	"message": {
+		"default": {
+			"pkg": "net.message",
+			"fieldPkg": "net.type",
+			"comment": "",
+			"method": "GET",
+			"response": "response->$a-{name}Response",
+			"domainIndex": 0
+		},
+		"extra": [
+			{
+				"name": "Index",
+				"comment": "竞赛首页",
+				"url": "/studentMobile/competition/index.vpage"
+			},
+			{
+				"name": "DayIndex",
+				"comment": "资格赛首页",
+				"url": "/studentMobile/competition/day/competition/index.vpage"
+			},
+			{
+				"name": "WeekIndex",
+				"comment": "排位赛首页",
+				"url": "/studentMobile/competition/week/competition/index.vpage"
+			},
+			{
+				"name": "GetQuizs",
+				"comment": "获取题目接口",
+				"url": "/studentMobile/competition/questions.vpage",
+				"method": "POST",
+				"fields": [
+					{
+						"name": "competitionType",
+						"type": "string",
+						"comment": "DayCompetition, //资格赛 WeekCompetition, //周排位赛 MonthCompetition, //月排位赛"
+					},
+					{
+						"name": "competitionId",
+						"type": "string",
+						"comment": "竞赛id，再次取题目需要有此参数，（第一次获取题目时返回）"
+					}
+				]
+			},
+			{
+				"name": "SubmitResult",
+				"comment": "答题接口",
+				"url": "/studentMobile/competition/processresult.vpage",
+				"method": "POST",
+				"fields": [
+					{
+						"name": "competitionType",
+						"type": "string",
+						"comment": "DayCompetition, //资格赛 WeekCompetition, //周排位赛 MonthCompetition, //月排位赛"
+					},
+					{
+						"name": "competitionId",
+						"type": "string",
+						"comment": "竞赛id，再次取题目需要有此参数，（第一次获取题目时返回）"
+					},
+					{
+						"name": "result",
+						"type": "string",
+						"comment": "答题结果"
+					},
+					{
+						"name": "questionNum",
+						"type": "int",
+						"comment": "第几道题（开始是第1道）"
+					}
+				]
+			},
+			{
+				"name": "GiftIndex",
+				"comment": "竞赛礼包领取页面",
+				"url": "/studentMobile/competition/gift/index.vpage"
+			},
+			{
+				"name": "GetGift",
+				"comment": "竞赛礼包领取",
+				"url": "/studentMobile/competition/gift/receive.vpage",
+				"method": "POST"
+			},
+			{
+				"name": "GetProvinceRank",
+				"comment": "排行榜资格赛省榜单信息",
+				"url": "/studentMobile/competition/province/rank/index.vpage",
+				"fields": [
+					{
+						"name": "pageIndex",
+						"type": "int",
+						"comment": "取榜单第几页的数据(从0开始计算,0表示第一页)"
+					},
+					{
+						"name": "pageSize",
+						"type": "int",
+						"comment": "每页的数据量(现在默认是一页是10条,建议一页不超过20条,如果超过请和后端同学沟通,数据量大小影响后台性能)"
+					}
+				]
+			},
+			{
+				"name": "GetSchoolRank",
+				"comment": "排行榜资格赛校榜单信息",
+				"url": "/studentMobile/competition/school/rank/index.vpage"
+			},
+			{
+				"name": "GetNationRank",
+				"comment": "学生获取排行全国榜榜单信息",
+				"url": "/studentMobile/competition/country/rank/index.vpage",
+				"fields": [
+					{
+						"name": "pageIndex",
+						"type": "int",
+						"comment": "取榜单第几页的数据(从0开始计算,0表示第一页)"
+					},
+					{
+						"name": "pageSize",
+						"type": "int",
+						"comment": "每页的数据量(现在默认是一页是10条,建议一页不超过20条,如果超过请和后端同学沟通,数据量大小影响后台性能)"
+					}
+				]
+			},
+			{
+				"name": "MonthIndex",
+				"comment": "月总决赛首页",
+				"url": "/studentMobile/competition/month/competition/index.vpage"
+			}
+		]
+	},
+	"response": {
+		"default": {
+			"comment": "",
+			"pkg": "net.response",
+			"fieldPkg": "net.type"
+		},
+		"extra": [
+			{
+				"name": "IndexResponse",
+				"comment": "获取首页信息以及用户相关数据",
+				"fields": [
+					{
+						"name": "firstLogin",
+						"type": "boolean",
+						"comment": "是否首次进入首页"
+					},
+					{
+						"name": "name",
+						"type": "string",
+						"comment": "学生姓名"
+					},
+					{
+						"name": "imgUrl",
+						"type": "string",
+						"comment": "头像"
+					},
+					{
+						"name": "weekTicketNum",
+						"type": "int",
+						"comment": "周赛门票数量"
+					},
+					{
+						"name": "monthTicketNum",
+						"type": "int",
+						"comment": "月赛门票数量"
+					},
+					{
+						"name": "dayCompetitionInfo",
+						"comment": "资格赛信息"
+					},
+					{
+						"name": "weekCompetitionInfo",
+						"comment": "排位赛信息"
+					},
+					{
+						"name": "monthCompetitionInfo",
+						"comment": "月赛信息"
+					},
+					{
+						"name": "rankResultList",
+						"comment": "发奖结果popUp，因为每次比赛结束只显示一次，如有该字段则弹出，没有该字段时不处理"
+					}
+				]
+			},
+			{
+				"name": "DayIndexResponse",
+				"comment": "资格赛首页",
+				"fields": [
+					{
+						"name": "firstLogin",
+						"type": "boolean",
+						"comment": "本周1到周5是否首次进入资格赛首页(true表示首次进入)"
+					},
+					{
+						"name": "grade",
+						"type": "int",
+						"comment": "最高成绩(可能字段不存在)"
+					},
+					{
+						"name": "totalTickets",
+						"type": "int",
+						"comment": "奖励的门票数量"
+					},
+					{
+						"name": "dayTicketNum",
+						"type": "int",
+						"comment": "自己资格赛剩余次数"
+					},
+					{
+						"name": "appStatus",
+						"type": "int",
+						"comment": "应用APP付费状况 0:未付费过,1:购买已过期,2:有效期内"
+					}
+				]
+			},
+			{
+				"name": "WeekIndexResponse",
+				"comment": "排位赛首页",
+				"fields": [
+					{
+						"name": "firstLogin",
+						"type": "boolean",
+						"comment": "是否本周首次点击进入排位赛首页(true表示首次进入)"
+					},
+					{
+						"name": "questionNum",
+						"type": "int",
+						"comment": "最高连对题数(字段可能不存在)"
+					},
+					{
+						"name": "grade",
+						"type": "int",
+						"comment": "最高成绩(可能字段不存在)"
+					},
+					{
+						"name": "provinceRank",
+						"type": "int",
+						"comment": "省区排名(字段可能不存在)"
+					},
+					{
+						"name": "weekTicket",
+						"type": "int",
+						"comment": "自己周赛的门票数量"
+					}
+				]
+			},
+			{
+				"name": "GetQuizsResponse",
+				"comment": "",
+				"fields": [
+					{
+						"name": "questionList",
+						"comment": "题目id列表"
+					},
+					{
+						"name": "competitionId",
+						"type": "string",
+						"comment": "竞赛id"
+					}
+				]
+			},
+			{
+				"name": "SubmitResultResponse",
+				"comment": "",
+				"fields": [
+					{
+						"name": "finished",
+						"type": "boolean",
+						"comment": "是否结束"
+					},
+					{
+						"name": "answerCorrect",
+						"type": "boolean",
+						"comment": "回答是否正确"
+					},
+					{
+						"name": "totalScore",
+						"type": "int",
+						"comment": "当前总分"
+					},
+					{
+						"name": "questionScore",
+						"type": "int",
+						"comment": "当前题目获得分数"
+					},
+					{
+						"name": "blankRightList",
+						"comment": "小题答案"
+					},
+					{
+						"name": "dayCompetitionResult",
+						"type": "any",
+						"comment": "资格赛结果（全部答完）"
+					},
+					{
+						"name": "weekCompetitionResult",
+						"type": "any",
+						"comment": "排行赛结果（有错误题目出现）"
+					},
+					{
+						"name": "monthCompetitionResult",
+						"type": "any",
+						"comment": "月赛结果（有错误题目出现）"
+					}
+				]
+			},
+			{
+				"name": "GiftIndexResponse",
+				"comment": "",
+				"fields": [
+					{
+						"name": "giftList",
+						"comment": "礼包列表(这块前端写死也是OK的，固定数据)"
+					},
+					{
+						"name": "receiveState",
+						"type": "int",
+						"comment": "0:不可领取 1:可领取 2:已经领取"
+					},
+					{
+						"name": "opendProduct",
+						"type": "boolean",
+						"comment": "阿分提相应(英语、数学)产品开通与否"
+					}
+				]
+			},
+			{
+				"name": "GetGiftResponse",
+				"comment": "",
+				"fields": [
+					{
+						"name": "receivedGiftList",
+						"comment": "已领取的礼包列表"
+					},
+					{
+						"name": "receiveState",
+						"type": "int",
+						"comment": "0:不可领取 1:可领取 2:已经领取"
+					}
+				]
+			},
+			{
+				"name": "GetProvinceRankResponse",
+				"comment": "",
+				"fields": [
+					{
+						"name": "thisWeekFlag",
+						"type": "boolean",
+						"comment": "true表示是本周,false表示为上一周 "
+					},
+					{
+						"name": "month",
+						"type": "int",
+						"comment": "月赛榜上的月份 "
+					},
+					{
+						"name": "provinceName",
+						"type": "string",
+						"comment": "省榜单上的省名"
+					},
+					{
+						"name": "studentGradeInfo",
+						"comment": "用户本人个人成绩信息 (该字段可能不存在)"
+					},
+					{
+						"name": "provinceGradeInfoList",
+						"comment": "省榜单前100名成绩信息,字段可能不存在(前100名有时会对应100多个学生)"
+					},
+					{
+						"name": "pageInfo",
+						"comment": "分页信息 "
+					}
+				]
+			},
+			{
+				"name": "GetSchoolRankResponse",
+				"comment": "",
+				"fields": [
+					{
+						"name": "thisWeekFlag",
+						"type": "boolean",
+						"comment": "true表示是本周,false表示为上一周 "
+					},
+					{
+						"name": "month",
+						"type": "int",
+						"comment": "月赛榜上的月份 "
+					},
+					{
+						"name": "provinceName",
+						"type": "string",
+						"comment": "省榜单上的省名"
+					},
+					{
+						"name": "studentGradeInfo",
+						"comment": "用户本人个人成绩信息 (该字段可能不存在)"
+					},
+					{
+						"name": "schoolGradeInfoList",
+						"comment": "校榜前20名成绩,字段可能不存在(前20名有时会对应20多个学生)"
+					}
+				]
+			},
+			{
+				"name": "GetNationRankResponse",
+				"comment": "",
+				"fields": [
+					{
+						"name": "thisWeekFlag",
+						"type": "boolean",
+						"comment": "true表示是本周,false表示为上一周 "
+					},
+					{
+						"name": "month",
+						"type": "int",
+						"comment": "月赛榜上的月份 "
+					},
+					{
+						"name": "endDate",
+						"type": "string",
+						"comment": "*月*号(非月赛期间有该字段,榜单下方要用到) "
+					},
+					{
+						"name": "provinceName",
+						"type": "string",
+						"comment": "省榜单上的省名"
+					},
+					{
+						"name": "studentGradeInfo",
+						"comment": "用户本人个人成绩信息 (该字段可能不存在)"
+					},
+					{
+						"name": "countryGradeInfoList",
+						"comment": "全国榜单学生信息，根据分页信息获取的数据；没有数据时,字段不存在"
+					},
+					{
+						"name": "pageInfo",
+						"comment": "分页信息 "
+					}
+				]
+			},
+			{
+				"name": "MonthIndexResponse",
+				"comment": "排位赛首页",
+				"fields": [
+					{
+						"name": "firstLogin",
+						"type": "boolean",
+						"comment": "是否本月首次进入月赛首页(true表示首次进入)"
+					},
+					{
+						"name": "everOwnTicket",
+						"type": "boolean",
+						"comment": "是否获得过月赛门票 "
+					},
+					{
+						"name": "monthTicketNum",
+						"type": "int",
+						"comment": "自己的月票数 "
+					},
+					{
+						"name": "questionNum",
+						"type": "int",
+						"comment": "连对题数 (字段可能不存在)"
+					},
+					{
+						"name": "grade",
+						"type": "int",
+						"comment": "成绩 (字段可能不存在)"
+					},
+					{
+						"name": "countryRank",
+						"type": "int",
+						"comment": "全国排名(字段可能不存在)"
+					}
+				]
+			}
+		]
+	},
+	"type": {
+		"default": {
+			"comment": "",
+			"pkg": "net.type",
+			"fieldPkg": "net.type"
+		},
+		"extra": [
+			{
+				"name": "CompetitionInfoVO",
+				"comment": "同班同年级获得奖励提示",
+				"fields": [
+					{
+						"name": "turnOn",
+						"type": "boolean",
+						"comment": "比赛是否进行中"
+					},
+					{
+						"name": "title",
+						"type": "string",
+						"comment": "提示文案"
+					},
+					{
+						"name": "joinNum",
+						"type": "int",
+						"comment": "进行时的参赛人数"
+					},
+					{
+						"name": "weekCompetitionGift",
+						"type": "boolean",
+						"comment": "排位赛进行时该字段可能存在,true表示领取排位赛大礼包"
+					},
+					{
+						"name": "ticketStudentNum",
+						"type": "int",
+						"comment": "获得门票人数"
+					},
+					{
+						"name": "month",
+						"type": "int",
+						"comment": "如果是月赛则要传月份数"
+					},
+					{
+						"name": "beginTime",
+						"type": "int",
+						"comment": "比赛开始时间"
+					},
+					{
+						"name": "currentTime",
+						"type": "int",
+						"comment": "当前时间"
+					}
+				]
+			},
+			{
+				"name": "StudentGradeInfoVO",
+				"comment": "",
+				"fields": [
+					{
+						"name": "studentName",
+						"type": "string",
+						"comment": "学生姓名"
+					},
+					{
+						"name": "score",
+						"type": "int",
+						"comment": "得分成绩"
+					},
+					{
+						"name": "rank",
+						"type": "int",
+						"comment": "榜单上的 排名"
+					},
+					{
+						"name": "schoolName",
+						"type": "string",
+						"comment": "学校名"
+					},
+					{
+						"name": "imgUrl",
+						"type": "string",
+						"comment": "学生头像url"
+					}
+				]
+			},
+			{
+				"name": "ResultVO",
+				"comment": "",
+				"fields": [
+					{
+						"name": "qid",
+						"type": "string",
+						"comment": "题目ID"
+					},
+					{
+						"name": "clientType",
+						"type": "string",
+						"comment": "客户端类型：pc,mobile"
+					},
+					{
+						"name": "clientName",
+						"type": "string",
+						"comment": "客户端名称:***app"
+					},
+					{
+						"name": "finishTime",
+						"type": "int",
+						"comment": "完成时间"
+					},
+					{
+						"name": "answer",
+						"type": "any",
+						"comment": "答案"
+					},
+					{
+						"name": "additions",
+						"type": "any",
+						"comment": "扩展属性，没有可以为空"
+					}
+				]
+			},
+			{
+				"name": "QuestionResultMapper",
+				"comment": "",
+				"fields": [
+					{
+						"name": "examId",
+						"type": "string",
+						"comment": ""
+					},
+					{
+						"name": "finishTime",
+						"type": "int",
+						"comment": ""
+					},
+					{
+						"name": "answer",
+						"type": "any",
+						"comment": ""
+					}
+				]
+			},
+			{
+				"name": "GiftVO",
+				"comment": "",
+				"fields": [
+					{
+						"name": "type",
+						"type": "string",
+						"comment": "礼物类型(mathWeekTicket 数学月赛票/englishWeekTicket 英语月赛票)"
+					},
+					{
+						"name": "name",
+						"type": "string",
+						"comment": "礼物名称"
+					},
+					{
+						"name": "count",
+						"type": "int",
+						"comment": "礼物数量"
+					},
+					{
+						"name": "unit",
+						"type": "string",
+						"comment": "数量单位"
+					}
+				]
+			},
+			{
+				"name": "PageInfoVO",
+				"comment": "",
+				"fields": [
+					{
+						"name": "currentPage",
+						"type": "int",
+						"comment": "当前页(从0开始计算,0表示第一页)"
+					},
+					{
+						"name": "currentPageSize",
+						"type": "int",
+						"comment": "当前页的数据量"
+					},
+					{
+						"name": "totalPage",
+						"type": "int",
+						"comment": "总页数"
+					}
+				]
+			},
+			{
+				"name": "RankResultVO",
+				"comment": "",
+				"fields": [
+					{
+						"name": "rankField",
+						"type": "string",
+						"comment": "赛域(lastWeek 上周排位赛奖励、thisWeek 本周排位赛奖励、lastMonth 上月月赛奖励)"
+					},
+					{
+						"name": "rankType",
+						"type": "string",
+						"comment": "赛种(ProvinceRank 省榜、SchoolRank 校榜、WholeRank 全国榜)"
+					},
+					{
+						"name": "rank",
+						"type": "int",
+						"comment": "排名"
+					},
+					{
+						"name": "hasGift",
+						"type": "boolean",
+						"comment": "是否有礼物奖励"
+					},
+					{
+						"name": "giftList",
+						"comment": "礼物列表"
+					}
+				]
+			}
+		]
+	}
 }

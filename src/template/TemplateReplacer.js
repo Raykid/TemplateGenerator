@@ -52,7 +52,7 @@ function replaceTemplate(typeDict, template, confDict, conf) {
                     return conf_1;
             }
         }
-        return null;
+        return {};
     }
     function getCustomTypes(fields) {
         var customTypes = [];
