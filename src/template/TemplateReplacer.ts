@@ -108,7 +108,14 @@ export function replaceTemplate(
         {
             if(conf.from == type)
             {
-                return conf;
+                // 是基础类型
+                return {
+                    from: conf.from,
+                    to: conf.to,
+                    class: conf.class,
+                    isCustom: false,
+                    customTypes: []
+                };
             }
             else if(conf.from instanceof RegExp)
             {
@@ -118,6 +125,7 @@ export function replaceTemplate(
                     let customTypes:langParser.LangType[] = [];
                     let tempStrs:string[] = [];
                     let tempStr:string = res[0];
+                    let isCustom:boolean = false;
                     // 将整个段落的前面部分推入数组
                     tempStrs.push(type.substring(0, res.index));
                     for(let i:number = 1, len:number = res.length; i < len; i++)
@@ -136,7 +144,9 @@ export function replaceTemplate(
                         // 连接customTypes
                         customTypes = customTypes.concat(subType.customTypes);
                         // 如果subType是customType则将其推入数组
-                        if(subType.class == "custom") customTypes.push(subType);
+                        if(subType.isCustom) customTypes.push(subType);
+                        // 计算自身的isCustom属性，需要递归地将所有子类型都做或运算
+                        isCustom = isCustom || transformType(before).isCustom;
                     }
                     // 将customTypes做一次去重
                     customTypes = removeDuplicate(customTypes);
@@ -150,6 +160,7 @@ export function replaceTemplate(
                         from: type,
                         to: newType.replace(conf.from, conf.to),
                         class: conf.class,
+                        isCustom: isCustom,
                         customTypes: customTypes
                     };
                 }
@@ -160,6 +171,7 @@ export function replaceTemplate(
             from: type,
             to: type,
             class: "custom",
+            isCustom: true,
             customTypes: []
         };
     }

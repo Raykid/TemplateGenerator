@@ -25,6 +25,8 @@ function parseConfig(root, langs) {
             if (!regStr.test(type.from)) {
                 type.from = new RegExp(type.from);
             }
+            // 设置isCustom
+            type.isCustom = false;
             // 填充默认的customTypes
             type.customTypes = [];
         }

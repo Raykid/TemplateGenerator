@@ -28,6 +28,8 @@ export function parseConfig(root:string, langs:string[]):Lang[]
             {
                 type.from = new RegExp(type.from as string);
             }
+            // 设置isCustom
+            type.isCustom = false;
             // 填充默认的customTypes
             type.customTypes = [];
         }
@@ -61,6 +63,7 @@ export interface LangType
     from:string|RegExp;
     to:string;
     class:string;
+    isCustom:boolean;
     customTypes:any[];
 }
 
