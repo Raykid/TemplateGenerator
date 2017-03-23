@@ -62,5 +62,11 @@
       "file": "message.tpl",
       "saveName": "messages/$a-{name}Message.ts"
     }
+  ],
+  "include": [
+	"others.json"
+  ],
+  "exclude": [
+	"fuck.json"
   ]
 }

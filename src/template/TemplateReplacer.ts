@@ -47,7 +47,7 @@ export function replaceTemplate(
         res.saveName = text;
     }));
     // 替换内容
-    ares.bind(newConf, new ares_template.TemplateCompiler(template.file, (text:string)=>{
+    ares.bind(newConf, new ares_template.TemplateCompiler(template.content, (text:string)=>{
         res.content = text;
     }));
     // 返回结果

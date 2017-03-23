@@ -36,7 +36,7 @@ function replaceTemplate(typeDict, template, conf) {
         res.saveName = text;
     }));
     // 替换内容
-    ares.bind(newConf, new ares_template.TemplateCompiler(template.file, function (text) {
+    ares.bind(newConf, new ares_template.TemplateCompiler(template.content, function (text) {
         res.content = text;
     }));
     // 返回结果

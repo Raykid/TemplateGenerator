@@ -4,7 +4,7 @@ namespace net.messages
 	/**
 	 * 这是一个十足的测试消息
 	 */
-	export class GetGrayInfoMessage extends vox.net.BaseRequestMessage
+	export class GetGrayInfo1Message extends vox.net.BaseRequestMessage
 	{
 		/** 测试byte类型 */
         public testByte:number;
@@ -50,7 +50,7 @@ namespace net.messages
 
 		public constructor()
 		{
-			super(MessageType.GetGrayInfo);
+			super(MessageType.GetGrayInfo1);
 		}
 		
 		public __url(): string

@@ -1,20 +1,20 @@
 namespace net.messages
 {
 	/**
-	 * 首页消息
+	 * 弹窗
 	 */
-	export class HomeIndexMessage extends vox.net.BaseRequestMessage
+	export class GetPopupInfo1Message extends vox.net.BaseRequestMessage
 	{
 		public constructor()
 		{
-			super(MessageType.HomeIndex);
+			super(MessageType.GetPopupInfo1);
 		}
 		
 		public __url(): string
 		{
 			var context:vox.context.ApplicationContext = vox.context.ContextManager.context;
 			var config:vox.system.SystemConfig = context.getSystemConfig();
-			return ((config.domains[0] || config.domain) + "/afenti/api/login.vpage");
+			return ((config.domains[0] || config.domain) + "/afenti/api/popup.vpage");
 		}
 		
 		public __useGet(): Boolean

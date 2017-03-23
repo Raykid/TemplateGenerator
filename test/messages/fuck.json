@@ -1,0 +1,199 @@
+{
+  "message": {
+    "default": {
+      "pkg": "net.messages",
+      "fieldPkg": "net.types",
+      "comment": "",
+      "method": "GET",
+      "response": "response->$a-{name}Response2",
+      "domainIndex": 0
+    },
+    "extra": [
+      {
+        "name": "HomeIndex2",
+        "comment": "首页消息",
+        "url": "/afenti/api/login.vpage"
+      },
+      {
+        "name": "GetPopupInfo2",
+        "comment": "弹窗",
+        "url": "/afenti/api/popup.vpage",
+        "response": "response->Empty"
+      },
+      {
+        "name": "GetGrayInfo2",
+        "url": "/afenti/api/gray.vpage",
+        "method": "POST",
+        "response": "response->Empty",
+        "comment": "这是一个十足的测试消息",
+        "fields": [
+          {
+            "name": "testByte",
+            "type": "byte",
+            "comment": "测试byte类型"
+          },
+          {
+            "name": "testShort",
+            "type": "short",
+            "comment": "测试short类型"
+          },
+          {
+            "name": "testInt",
+            "type": "int",
+            "comment": "测试int类型"
+          },
+          {
+            "name": "testLong",
+            "type": "long",
+            "comment": "测试long类型"
+          },
+          {
+            "name": "testFloat",
+            "type": "float",
+            "comment": "测试float类型"
+          },
+          {
+            "name": "testDouble",
+            "type": "double",
+            "comment": "测试double类型"
+          },
+          {
+            "name": "testString",
+            "type": "string",
+            "comment": "测试string类型"
+          },
+          {
+            "name": "testBoolean",
+            "type": "boolean",
+            "comment": "测试boolean类型"
+          },
+          {
+            "name": "testAny",
+            "type": "any",
+            "comment": "测试any类型"
+          },
+          {
+            "name": "testArray",
+            "type": "int[]",
+            "comment": "测试简单类型数组"
+          },
+          {
+            "name": "testMap",
+            "type": "{string:int}",
+            "comment": "测试简单类型表"
+          },
+          {
+            "name": "other",
+            "type": "OtherVO",
+            "comment": "测试复杂类型"
+          },
+          {
+            "name": "others",
+            "type": "OtherVO[]",
+            "comment": "测试复杂类型数组"
+          },
+          {
+            "name": "otherMap",
+            "type": "{string:OtherVO}",
+            "comment": "测试复杂类型表"
+          }
+        ]
+      }
+    ]
+  },
+  "response": {
+    "default": {
+      "comment": "",
+      "pkg": "net.response",
+      "fieldPkg": "net.types"
+    },
+    "extra": [
+      {
+        "name": "Empty2"
+      },
+      {
+        "name": "HomeIndexResponse2",
+        "fields": [
+          {
+            "name": "testByte",
+            "type": "byte",
+            "comment": "测试byte类型"
+          },
+          {
+            "name": "testShort",
+            "type": "short"
+          },
+          {
+            "name": "testInt",
+            "type": "int"
+          },
+          {
+            "name": "testLong",
+            "type": "long"
+          },
+          {
+            "name": "testFloat",
+            "type": "float"
+          },
+          {
+            "name": "testDouble",
+            "type": "double"
+          },
+          {
+            "name": "testString",
+            "type": "string"
+          },
+          {
+            "name": "testBoolean",
+            "type": "boolean"
+          },
+          {
+            "name": "testAny",
+            "type": "any"
+          },
+          {
+            "name": "testArray",
+            "type": "int[]"
+          },
+          {
+            "name": "testMap",
+            "type": "{string:}"
+          },
+          {
+            "name": "other",
+            "type": "OtherVO",
+            "comment": "测试复杂类型"
+          },
+          {
+            "name": "others",
+            "type": "OtherVO[]",
+            "comment": "测试复杂类型数组"
+          },
+          {
+            "name": "otherMap",
+            "type": "{string:OtherVO}",
+            "comment": "测试复杂类型表"
+          }
+        ]
+      }
+    ]
+  },
+  "type": {
+    "default": {
+      "comment": "",
+      "pkg": "net.types",
+      "fieldPkg": "net.types"
+    },
+    "extra": [
+      {
+        "name": "OtherVO2",
+        "fields": [
+          {
+            "name": "fuck",
+            "type": "string"
+          }
+        ]
+      }
+    ]
+  }
+}

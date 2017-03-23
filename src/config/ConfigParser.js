@@ -28,10 +28,14 @@ function parserConfig(root) {
                 var conf = copyConfig(tempConf.default, temp);
                 // 再用exConf中的字段覆盖之
                 conf = copyConfig(exConf, conf);
+                // 添加所属文件名
+                conf.file = fileName;
                 // 推入conf数组
                 confs.push(conf);
             }
         }
+        // 日志
+        console.log("\u8BFB\u53D6\u6D88\u606F\u914D\u7F6E[" + fileName + "]\u6210\u529F");
     }
     // 如果conf内容中间有->符号，则表示要使用配置中的某项替换
     var regConf = /^([a-zA-Z0-9_]+)\->([a-zA-Z0-9_]+)$/;
@@ -89,4 +93,23 @@ function copyConfig(tarConfig, oriConfig) {
     }
     return oriConfig;
 }
+function filterConfigs(configDict, include, exclude) {
+    var result = {};
+    for (var key in configDict) {
+        var configs = configDict[key];
+        result[key] = configs.filter(function (conf) {
+            // 优先判断白名单
+            if (include && include.length > 0) {
+                // 白名单存在，那么在白名单里就用，不在就不用
+                return (include.indexOf(conf.file) >= 0);
+            }
+            else {
+                // 在就不用，不在就用
+                return (!exclude || exclude.indexOf(conf.file) < 0);
+            }
+        }, this);
+    }
+    return result;
+}
+exports.filterConfigs = filterConfigs;
 //# sourceMappingURL=ConfigParser.js.map
