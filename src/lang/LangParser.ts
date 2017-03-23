@@ -28,8 +28,8 @@ export function parseConfig(root:string, langs:string[]):Lang[]
             {
                 type.from = new RegExp(type.from as string);
             }
-            // 填充默认的customNames
-            type.customNames = [];
+            // 填充默认的customTypes
+            type.customTypes = [];
         }
         // 解析templates，将file指向的文件内容加载到content属性中
         for(let template of config.templates)
@@ -61,7 +61,7 @@ export interface LangType
     from:string|RegExp;
     to:string;
     class:string;
-    customNames:string[];
+    customTypes:any[];
 }
 
 export interface LangTemplate

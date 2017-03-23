@@ -1,7 +1,7 @@
 namespace $a-{pkg}
 {
-    $a-{for: name in getCustomNames(fields)}
-    import $a-{name} = $a-{fieldPkg}.$a-{name};
+    $a-{for: type in getCustomTypes(fields)}
+    import $a-{type.to} = $a-{fieldPkg}.$a-{type.to};
     $a-{end for}
 	/**
 	 * $a-{comment}

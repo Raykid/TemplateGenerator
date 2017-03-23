@@ -23,7 +23,7 @@ function replaceTemplate(typeDict, template, conf) {
         newConf[key] = value;
     }
     // 添加一些工具方法
-    newConf.getCustomNames = getCustomNames;
+    newConf.getCustomTypes = getCustomTypes;
     newConf.removeDuplicate = removeDuplicate;
     newConf.transformType = transformType;
     // 准备结果
@@ -42,22 +42,28 @@ function replaceTemplate(typeDict, template, conf) {
     // 返回结果
     return res;
     /**************** 下面是工具方法 ****************/
-    function getCustomNames(fields) {
-        var customNames = [];
+    function getCustomTypes(fields) {
+        var customTypes = [];
         for (var _i = 0, fields_1 = fields; _i < fields_1.length; _i++) {
             var field = fields_1[_i];
-            customNames = customNames.concat(field.type.customNames);
+            customTypes = customTypes.concat(field.type.customTypes);
         }
-        return removeDuplicate(customNames);
+        return removeDuplicate(customTypes, equals);
     }
-    function removeDuplicate(list) {
+    function equals(a, b) {
+        return (a.to == b.to);
+    }
+    function removeDuplicate(list, equals) {
         var tempList = [];
-        for (var i = 0, len = list.length; i < len; i++) {
+        for (var i = 0, lenI = list.length; i < lenI; i++) {
             var item = list[i];
-            if (tempList.indexOf(item) >= 0) {
-                list.splice(i, 1);
-                i--;
-                len--;
+            for (var j = 0, lenJ = tempList.length; j < lenJ; j++) {
+                var tempItem = tempList[j];
+                if ((equals != null && equals(item, tempItem)) || item == tempItem) {
+                    list.splice(i, 1);
+                    i--;
+                    lenI--;
+                }
             }
             tempList.push(item);
         }
@@ -72,7 +78,7 @@ function replaceTemplate(typeDict, template, conf) {
             else if (conf_1.from instanceof RegExp) {
                 var res = conf_1.from.exec(type);
                 if (res) {
-                    var customNames = [];
+                    var customTypes = [];
                     var tempStrs = [];
                     var tempStr = res[0];
                     // 将整个段落的前面部分推入数组
@@ -89,11 +95,14 @@ function replaceTemplate(typeDict, template, conf) {
                         tempStrs.push(after);
                         // 截断tempStr
                         tempStr = tempStr.substr(index + count);
-                        // 连接customNames
-                        customNames = customNames.concat(subType.customNames);
+                        // 连接customTypes
+                        customTypes = customTypes.concat(subType.customTypes);
+                        // 如果subType是customType则将其推入数组
+                        if (subType.class == "custom")
+                            customTypes.push(subType);
                     }
-                    // 将customNames做一次去重
-                    customNames = removeDuplicate(customNames);
+                    // 将customTypes做一次去重
+                    customTypes = removeDuplicate(customTypes, equals);
                     // 将tempStr剩余部分推入数组
                     tempStrs.push(tempStr);
                     // 将整个段落的后面部分推入数组
@@ -104,7 +113,7 @@ function replaceTemplate(typeDict, template, conf) {
                         from: type,
                         to: newType.replace(conf_1.from, conf_1.to),
                         class: conf_1.class,
-                        customNames: customNames
+                        customTypes: customTypes
                     };
                 }
             }
@@ -114,7 +123,7 @@ function replaceTemplate(typeDict, template, conf) {
             from: type,
             to: type,
             class: "custom",
-            customNames: [type]
+            customTypes: []
         };
     }
 }

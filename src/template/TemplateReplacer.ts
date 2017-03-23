@@ -34,7 +34,7 @@ export function replaceTemplate(
         newConf[key] = value;
     }
     // 添加一些工具方法
-    newConf.getCustomNames = getCustomNames;
+    newConf.getCustomTypes = getCustomTypes;
     newConf.removeDuplicate = removeDuplicate;
     newConf.transformType = transformType;
     // 准备结果
@@ -54,27 +54,36 @@ export function replaceTemplate(
     return res;
 
     /**************** 下面是工具方法 ****************/
-    function getCustomNames(fields:configParser.ConfigField[]):string[]
+    function getCustomTypes(fields:configParser.ConfigField[]):langParser.LangType[]
     {
-        let customNames:string[] = [];
+        let customTypes:langParser.LangType[] = [];
         for(let field of fields)
         {
-            customNames = customNames.concat(field.type.customNames);
+            customTypes = customTypes.concat(field.type.customTypes);
         }
-        return removeDuplicate(customNames);
+        return removeDuplicate(customTypes, equals);
     }
 
-    function removeDuplicate<T>(list:T[]):T[]
+    function equals(a:langParser.LangType, b:langParser.LangType):boolean
+    {
+        return (a.to == b.to);
+    }
+
+    function removeDuplicate<T>(list:T[], equals?:(a:T, b:T)=>boolean):T[]
     {
         let tempList:T[] = [];
-        for(var i:number = 0, len:number = list.length; i < len; i++)
+        for(let i:number = 0, lenI:number = list.length; i < lenI; i++)
         {
             let item:T = list[i];
-            if(tempList.indexOf(item) >= 0)
+            for(let j:number = 0, lenJ:number = tempList.length; j < lenJ; j++)
             {
-                list.splice(i, 1);
-                i --;
-                len --;
+                let tempItem:T = tempList[j];
+                if((equals != null && equals(item, tempItem)) || item == tempItem)
+                {
+                    list.splice(i, 1);
+                    i --;
+                    lenI --;
+                }
             }
             tempList.push(item);
         }
@@ -94,7 +103,7 @@ export function replaceTemplate(
                 var res:RegExpExecArray = conf.from.exec(type);
                 if(res)
                 {
-                    let customNames:string[] = [];
+                    let customTypes:langParser.LangType[] = [];
                     let tempStrs:string[] = [];
                     let tempStr:string = res[0];
                     // 将整个段落的前面部分推入数组
@@ -112,11 +121,13 @@ export function replaceTemplate(
                         tempStrs.push(after);
                         // 截断tempStr
                         tempStr = tempStr.substr(index + count);
-                        // 连接customNames
-                        customNames = customNames.concat(subType.customNames);
+                        // 连接customTypes
+                        customTypes = customTypes.concat(subType.customTypes);
+                        // 如果subType是customType则将其推入数组
+                        if(subType.class == "custom") customTypes.push(subType);
                     }
-                    // 将customNames做一次去重
-                    customNames = removeDuplicate(customNames);
+                    // 将customTypes做一次去重
+                    customTypes = removeDuplicate(customTypes, equals);
                     // 将tempStr剩余部分推入数组
                     tempStrs.push(tempStr);
                     // 将整个段落的后面部分推入数组
@@ -127,7 +138,7 @@ export function replaceTemplate(
                         from: type,
                         to: newType.replace(conf.from, conf.to),
                         class: conf.class,
-                        customNames: customNames
+                        customTypes: customTypes
                     };
                 }
             }
@@ -137,7 +148,7 @@ export function replaceTemplate(
             from: type,
             to: type,
             class: "custom",
-            customNames: [type]
+            customTypes: []
         };
     }
 }

@@ -25,8 +25,8 @@ function parseConfig(root, langs) {
             if (!regStr.test(type.from)) {
                 type.from = new RegExp(type.from);
             }
-            // 填充默认的customNames
-            type.customNames = [];
+            // 填充默认的customTypes
+            type.customTypes = [];
         }
         // 解析templates，将file指向的文件内容加载到content属性中
         for (var _b = 0, _c = config.templates; _b < _c.length; _b++) {
