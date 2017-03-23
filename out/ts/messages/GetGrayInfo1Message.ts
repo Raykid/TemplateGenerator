@@ -1,6 +1,6 @@
-namespace net.messages
+namespace net.message
 {
-    import OtherVO = net.types.OtherVO;
+    import OtherVO1 = net.type.OtherVO1;
 	/**
 	 * 这是一个十足的测试消息
 	 */
@@ -40,13 +40,13 @@ namespace net.messages
         public testMap:{[key:string]:number} = {};
 
 		/** 测试复杂类型 */
-        public other:OtherVO = new OtherVO();
+        public other:OtherVO1 = new OtherVO1();
 
 		/** 测试复杂类型数组 */
-        public others:OtherVO[] = [];
+        public others:OtherVO1[] = [];
 
 		/** 测试复杂类型表 */
-        public otherMap:{[key:string]:OtherVO} = {};
+        public otherMap:{[key:string]:OtherVO1} = {};
 
 		public constructor()
 		{

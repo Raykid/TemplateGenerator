@@ -3,19 +3,20 @@
  */
 import langParser = require("../lang/LangParser");
 import configParser = require("../config/ConfigParser");
-var ares = require("../../libs/ares.js");
-var ares_template = require("../../libs/ares_template.js");
+let ares = require("../../libs/ares.js");
+let ares_template = require("../../libs/ares_template.js");
 
 export function replaceTemplate(
     typeDict:langParser.LangType[],
     template:langParser.LangTemplate,
+    confDict:configParser.ConfigDict,
     conf:{[key:string]:any}):TemplateResult
 {
     // 复制一份conf，将其中的类型改了
     let newConf:any = {};
     for(let key in conf)
     {
-        var value:any = conf[key];
+        let value:any = conf[key];
         if(key == "fields")
         {
             // 需要将fields里面的所有类型进行一次转换
@@ -34,6 +35,7 @@ export function replaceTemplate(
         newConf[key] = value;
     }
     // 添加一些工具方法
+    newConf.getConfigByName = getConfigByName;
     newConf.getCustomTypes = getCustomTypes;
     newConf.removeDuplicate = removeDuplicate;
     newConf.transformType = transformType;
@@ -54,6 +56,21 @@ export function replaceTemplate(
     return res;
 
     /**************** 下面是工具方法 ****************/
+    function getConfigByName(name:string):configParser.Config
+    {
+        for(let field in confDict)
+        {
+            let confs:configParser.Config[] = confDict[field];
+            for(let i:number = 0, len:number = confs.length; i < len; i++)
+            {
+                let conf:configParser.Config = confs[i];
+                if(conf.name == name)
+                    return conf;
+            }
+        }
+        return null;
+    }
+
     function getCustomTypes(fields:configParser.ConfigField[]):langParser.LangType[]
     {
         let customTypes:langParser.LangType[] = [];
@@ -61,24 +78,19 @@ export function replaceTemplate(
         {
             customTypes = customTypes.concat(field.type.customTypes);
         }
-        return removeDuplicate(customTypes, equals);
+        return removeDuplicate(customTypes);
     }
 
-    function equals(a:langParser.LangType, b:langParser.LangType):boolean
+    function removeDuplicate(list:langParser.LangType[]):langParser.LangType[]
     {
-        return (a.to == b.to);
-    }
-
-    function removeDuplicate<T>(list:T[], equals?:(a:T, b:T)=>boolean):T[]
-    {
-        let tempList:T[] = [];
+        let tempList:langParser.LangType[] = [];
         for(let i:number = 0, lenI:number = list.length; i < lenI; i++)
         {
-            let item:T = list[i];
+            let item:langParser.LangType = list[i];
             for(let j:number = 0, lenJ:number = tempList.length; j < lenJ; j++)
             {
-                let tempItem:T = tempList[j];
-                if((equals != null && equals(item, tempItem)) || item == tempItem)
+                let tempItem:langParser.LangType = tempList[j];
+                if(tempItem.from == item.from && tempItem.to == item.to && tempItem.class == item.class)
                 {
                     list.splice(i, 1);
                     i --;
@@ -100,7 +112,7 @@ export function replaceTemplate(
             }
             else if(conf.from instanceof RegExp)
             {
-                var res:RegExpExecArray = conf.from.exec(type);
+                let res:RegExpExecArray = conf.from.exec(type);
                 if(res)
                 {
                     let customTypes:langParser.LangType[] = [];
@@ -108,10 +120,10 @@ export function replaceTemplate(
                     let tempStr:string = res[0];
                     // 将整个段落的前面部分推入数组
                     tempStrs.push(type.substring(0, res.index));
-                    for(var i:number = 1, len:number = res.length; i < len; i++)
+                    for(let i:number = 1, len:number = res.length; i < len; i++)
                     {
                         let before:string = res[i];
-                        var subType:langParser.LangType = transformType(before);
+                        let subType:langParser.LangType = transformType(before);
                         let after:string = subType.to;
                         let index:number = tempStr.indexOf(before);
                         let count:number = before.length;
@@ -127,7 +139,7 @@ export function replaceTemplate(
                         if(subType.class == "custom") customTypes.push(subType);
                     }
                     // 将customTypes做一次去重
-                    customTypes = removeDuplicate(customTypes, equals);
+                    customTypes = removeDuplicate(customTypes);
                     // 将tempStr剩余部分推入数组
                     tempStrs.push(tempStr);
                     // 将整个段落的后面部分推入数组

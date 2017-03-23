@@ -39,7 +39,7 @@ for(let langConf of langConfigs)
         if(template.field == "global")
         {
             // 是全局域，直接使用langTempConfig生成代码
-            let res:templateReplacer.TemplateResult = templateReplacer.replaceTemplate(langConf.types, template, langTempConfig);
+            let res:templateReplacer.TemplateResult = templateReplacer.replaceTemplate(langConf.types, template, langTempConfig, langTempConfig);
             fileSystemUtil.saveFile(out, langConf.name, res.saveName, res.content);
             // 日志
             console.log(`生成[${langConf.name}]文件[${res.saveName}]成功`);
@@ -51,7 +51,7 @@ for(let langConf of langConfigs)
             for(let conf of confs)
             {
                 // 消息配置固定了
-                let res:templateReplacer.TemplateResult = templateReplacer.replaceTemplate(langConf.types, template, conf);
+                let res:templateReplacer.TemplateResult = templateReplacer.replaceTemplate(langConf.types, template, langTempConfig, conf);
                 fileSystemUtil.saveFile(out, langConf.name, res.saveName, res.content);
                 // 日志
                 console.log(`生成[${langConf.name}]文件[${res.saveName}]成功`);

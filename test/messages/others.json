@@ -84,17 +84,17 @@
           },
           {
             "name": "other",
-            "type": "OtherVO",
+            "type": "OtherVO1",
             "comment": "测试复杂类型"
           },
           {
             "name": "others",
-            "type": "OtherVO[]",
+            "type": "OtherVO1[]",
             "comment": "测试复杂类型数组"
           },
           {
             "name": "otherMap",
-            "type": "{string:OtherVO}",
+            "type": "{string:OtherVO1}",
             "comment": "测试复杂类型表"
           }
         ]

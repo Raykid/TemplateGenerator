@@ -36,7 +36,7 @@ for (var _i = 0, langConfigs_1 = langConfigs; _i < langConfigs_1.length; _i++) {
         // 模板固定了，使用模板中的作用域获取配置
         if (template.field == "global") {
             // 是全局域，直接使用langTempConfig生成代码
-            var res = templateReplacer.replaceTemplate(langConf.types, template, langTempConfig);
+            var res = templateReplacer.replaceTemplate(langConf.types, template, langTempConfig, langTempConfig);
             fileSystemUtil.saveFile(out, langConf.name, res.saveName, res.content);
             // 日志
             console.log("\u751F\u6210[" + langConf.name + "]\u6587\u4EF6[" + res.saveName + "]\u6210\u529F");
@@ -47,7 +47,7 @@ for (var _i = 0, langConfigs_1 = langConfigs; _i < langConfigs_1.length; _i++) {
             for (var _c = 0, confs_1 = confs; _c < confs_1.length; _c++) {
                 var conf = confs_1[_c];
                 // 消息配置固定了
-                var res = templateReplacer.replaceTemplate(langConf.types, template, conf);
+                var res = templateReplacer.replaceTemplate(langConf.types, template, langTempConfig, conf);
                 fileSystemUtil.saveFile(out, langConf.name, res.saveName, res.content);
                 // 日志
                 console.log("\u751F\u6210[" + langConf.name + "]\u6587\u4EF6[" + res.saveName + "]\u6210\u529F");

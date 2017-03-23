@@ -1,4 +1,4 @@
-namespace net.messages
+namespace net.message
 {
 	/**
 	 * 弹窗

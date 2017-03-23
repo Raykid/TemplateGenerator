@@ -30,6 +30,8 @@ export function parserConfig(root:string):ConfigDict
                 conf = copyConfig(exConf, conf);
                 // 添加所属文件名
                 conf.file = fileName;
+                // 添加所属域名
+                conf.field = field;
                 // 推入conf数组
                 confs.push(conf);
             }
@@ -130,11 +132,13 @@ export interface ConfigDict
 
 export interface Config
 {
+    /** 消息配置名称 */
+    name:string;
     /** 所属文件名 */
     file:string;
-    /** name属性是特殊的 */
-    name:string;
-    /** fields属性是特殊的 */
+    /** 消息所属域名 */
+    field:string;
+    /** 子域数组 */
     fields:ConfigField[];
 }
 

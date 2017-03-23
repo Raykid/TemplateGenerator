@@ -1,4 +1,4 @@
-namespace net.messages
+namespace net.message
 {
 	/**
 	 * 首页消息

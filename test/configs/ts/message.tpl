@@ -1,7 +1,7 @@
-namespace $a-{pkg}
+namespace net.message
 {
     $a-{for: type in getCustomTypes(fields)}
-    import $a-{type.to} = $a-{fieldPkg}.$a-{type.to};
+    import $a-{type.to} = net.$a-{getConfigByName(type.to).field}.$a-{type.to};
     $a-{end for}
 	/**
 	 * $a-{comment}

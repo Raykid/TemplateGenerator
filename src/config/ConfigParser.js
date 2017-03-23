@@ -30,6 +30,8 @@ function parserConfig(root) {
                 conf = copyConfig(exConf, conf);
                 // 添加所属文件名
                 conf.file = fileName;
+                // 添加所属域名
+                conf.field = field;
                 // 推入conf数组
                 confs.push(conf);
             }
