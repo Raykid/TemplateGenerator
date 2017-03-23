@@ -12,7 +12,7 @@ import fileSystemUtil = require("./file/FileSystemUtil");
 let args:string[] = process.argv.slice(2);
 
 // 下面打开就是测试代码
-args = ["../test", "../out", "ts"];
+// if(args.length <= 0) args = ["../test", "../out", "ts", "java"];
 
 let root:string = args[0];
 let out:string = args[1];

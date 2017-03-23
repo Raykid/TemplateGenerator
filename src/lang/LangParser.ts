@@ -2,6 +2,7 @@
  * Created by Raykid on 2017/3/16.
  */
 import * as fs from "fs";
+import * as path from "path";
 
 export function parseConfig(root:string, langs:string[]):Lang[]
 {
@@ -9,7 +10,13 @@ export function parseConfig(root:string, langs:string[]):Lang[]
     for(let i:number = 0, len:number = langs.length; i < len; i++)
     {
         var lang:string = langs[i];
-        let configStr:string = fs.readFileSync(root + "/configs/" + lang + "/config.json", "utf-8");
+        var url:string = path.join(root, "configs", lang, "config.json");
+        if(!fs.existsSync(url))
+        {
+            console.warn(`没有找到[${lang}]语言的配置文件`);
+            continue;
+        }
+        let configStr:string = fs.readFileSync(url, "utf-8");
         let config:Lang = JSON.parse(configStr);
         config.name = lang;
         // 解析types，将from变为正则表达式

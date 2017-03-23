@@ -4,11 +4,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Created by Raykid on 2017/3/16.
  */
 var fs = require("fs");
+var path = require("path");
 function parseConfig(root, langs) {
     var configs = [];
     for (var i = 0, len = langs.length; i < len; i++) {
         var lang = langs[i];
-        var configStr = fs.readFileSync(root + "/configs/" + lang + "/config.json", "utf-8");
+        var url = path.join(root, "configs", lang, "config.json");
+        if (!fs.existsSync(url)) {
+            console.warn("\u6CA1\u6709\u627E\u5230[" + lang + "]\u8BED\u8A00\u7684\u914D\u7F6E\u6587\u4EF6");
+            continue;
+        }
+        var configStr = fs.readFileSync(url, "utf-8");
         var config = JSON.parse(configStr);
         config.name = lang;
         // 解析types，将from变为正则表达式
