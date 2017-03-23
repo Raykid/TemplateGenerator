@@ -1,6 +1,10 @@
+/// <reference path="../type/StudentGradeInfoVO.ts"/>
+/// <reference path="../type/PageInfoVO.ts"/>
 
 namespace net.response
 {
+    import StudentGradeInfoVO = net.type.StudentGradeInfoVO;
+    import PageInfoVO = net.type.PageInfoVO;
 	
 	/**
 	 * 
@@ -20,13 +24,13 @@ namespace net.response
         public provinceName:string;
 
 		/** 用户本人个人成绩信息 (该字段可能不存在) */
-        public studentGradeInfo:undefined = new undefined();
+        public studentGradeInfo:StudentGradeInfoVO = new StudentGradeInfoVO();
 
 		/** 全国榜单学生信息，根据分页信息获取的数据；没有数据时,字段不存在 */
-        public countryGradeInfoList:undefined = new undefined();
+        public countryGradeInfoList:StudentGradeInfoVO[] = [];
 
 		/** 分页信息  */
-        public pageInfo:undefined = new undefined();
+        public pageInfo:PageInfoVO = new PageInfoVO();
 
 		public pack():{[name:string]:any}
 		{
@@ -36,7 +40,7 @@ namespace net.response
 				endDate: this.endDate,				
 				provinceName: this.provinceName,				
 				studentGradeInfo: this.studentGradeInfo.pack(),				
-				countryGradeInfoList: this.countryGradeInfoList.pack(),				
+				countryGradeInfoList: vox.net.packArray(this.countryGradeInfoList),				
 				pageInfo: this.pageInfo.pack()				
 			};
 		}
@@ -50,9 +54,9 @@ namespace net.response
 			this.month = data.month;
 			this.endDate = data.endDate;
 			this.provinceName = data.provinceName;
-			this.studentGradeInfo = new net.undefined.undefined().parse(data.studentGradeInfo);
-			this.countryGradeInfoList = new net.undefined.undefined().parse(data.countryGradeInfoList);
-			this.pageInfo = new net.undefined.undefined().parse(data.pageInfo);
+			this.studentGradeInfo = new net.type.StudentGradeInfoVO().parse(data.studentGradeInfo);
+			this.countryGradeInfoList = vox.net.parseArray(data.countryGradeInfoList, StudentGradeInfoVO);
+			this.pageInfo = new net.type.PageInfoVO().parse(data.pageInfo);
 			return this;
 		}
 	}

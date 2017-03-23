@@ -1,6 +1,8 @@
+/// <reference path="../type/StudentGradeInfoVO.ts"/>
 
 namespace net.response
 {
+    import StudentGradeInfoVO = net.type.StudentGradeInfoVO;
 	
 	/**
 	 * 
@@ -17,10 +19,10 @@ namespace net.response
         public provinceName:string;
 
 		/** 用户本人个人成绩信息 (该字段可能不存在) */
-        public studentGradeInfo:undefined = new undefined();
+        public studentGradeInfo:StudentGradeInfoVO = new StudentGradeInfoVO();
 
 		/** 校榜前20名成绩,字段可能不存在(前20名有时会对应20多个学生) */
-        public schoolGradeInfoList:undefined = new undefined();
+        public schoolGradeInfoList:StudentGradeInfoVO[] = [];
 
 		public pack():{[name:string]:any}
 		{
@@ -29,7 +31,7 @@ namespace net.response
 				month: this.month,				
 				provinceName: this.provinceName,				
 				studentGradeInfo: this.studentGradeInfo.pack(),				
-				schoolGradeInfoList: this.schoolGradeInfoList.pack()				
+				schoolGradeInfoList: vox.net.packArray(this.schoolGradeInfoList)				
 			};
 		}
 		
@@ -41,8 +43,8 @@ namespace net.response
 			this.thisWeekFlag = data.thisWeekFlag;
 			this.month = data.month;
 			this.provinceName = data.provinceName;
-			this.studentGradeInfo = new net.undefined.undefined().parse(data.studentGradeInfo);
-			this.schoolGradeInfoList = new net.undefined.undefined().parse(data.schoolGradeInfoList);
+			this.studentGradeInfo = new net.type.StudentGradeInfoVO().parse(data.studentGradeInfo);
+			this.schoolGradeInfoList = vox.net.parseArray(data.schoolGradeInfoList, StudentGradeInfoVO);
 			return this;
 		}
 	}

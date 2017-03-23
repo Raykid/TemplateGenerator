@@ -39,7 +39,8 @@ namespace net.messages
 	{
 		public exec():void
 		{
-			this.getMessage().__data = {
+			var msg:MonthIndexMessage = this.getMessage() as MonthIndexMessage;
+			msg.__data = {
 			};
 			super.exec();
 		}

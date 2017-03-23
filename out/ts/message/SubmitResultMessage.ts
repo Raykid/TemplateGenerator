@@ -51,7 +51,8 @@ namespace net.messages
 	{
 		public exec():void
 		{
-			this.getMessage().__data = {
+			var msg:SubmitResultMessage = this.getMessage() as SubmitResultMessage;
+			msg.__data = {
 				competitionType: msg.competitionType,// string - DayCompetition, //资格赛 WeekCompetition, //周排位赛 MonthCompetition, //月排位赛
 				competitionId: msg.competitionId,// string - 竞赛id，再次取题目需要有此参数，（第一次获取题目时返回）
 				result: msg.result,// string - 答题结果

@@ -1,6 +1,10 @@
+/// <reference path="../type/CompetitionInfoVO.ts"/>
+/// <reference path="../type/RankResultVO.ts"/>
 
 namespace net.response
 {
+    import CompetitionInfoVO = net.type.CompetitionInfoVO;
+    import RankResultVO = net.type.RankResultVO;
 	
 	/**
 	 * 获取首页信息以及用户相关数据
@@ -23,16 +27,16 @@ namespace net.response
         public monthTicketNum:number;
 
 		/** 资格赛信息 */
-        public dayCompetitionInfo:undefined = new undefined();
+        public dayCompetitionInfo:CompetitionInfoVO = new CompetitionInfoVO();
 
 		/** 排位赛信息 */
-        public weekCompetitionInfo:undefined = new undefined();
+        public weekCompetitionInfo:CompetitionInfoVO = new CompetitionInfoVO();
 
 		/** 月赛信息 */
-        public monthCompetitionInfo:undefined = new undefined();
+        public monthCompetitionInfo:CompetitionInfoVO = new CompetitionInfoVO();
 
 		/** 发奖结果popUp，因为每次比赛结束只显示一次，如有该字段则弹出，没有该字段时不处理 */
-        public rankResultList:undefined = new undefined();
+        public rankResultList:RankResultVO[] = [];
 
 		public pack():{[name:string]:any}
 		{
@@ -45,7 +49,7 @@ namespace net.response
 				dayCompetitionInfo: this.dayCompetitionInfo.pack(),				
 				weekCompetitionInfo: this.weekCompetitionInfo.pack(),				
 				monthCompetitionInfo: this.monthCompetitionInfo.pack(),				
-				rankResultList: this.rankResultList.pack()				
+				rankResultList: vox.net.packArray(this.rankResultList)				
 			};
 		}
 		
@@ -59,10 +63,10 @@ namespace net.response
 			this.imgUrl = data.imgUrl;
 			this.weekTicketNum = data.weekTicketNum;
 			this.monthTicketNum = data.monthTicketNum;
-			this.dayCompetitionInfo = new net.undefined.undefined().parse(data.dayCompetitionInfo);
-			this.weekCompetitionInfo = new net.undefined.undefined().parse(data.weekCompetitionInfo);
-			this.monthCompetitionInfo = new net.undefined.undefined().parse(data.monthCompetitionInfo);
-			this.rankResultList = new net.undefined.undefined().parse(data.rankResultList);
+			this.dayCompetitionInfo = new net.type.CompetitionInfoVO().parse(data.dayCompetitionInfo);
+			this.weekCompetitionInfo = new net.type.CompetitionInfoVO().parse(data.weekCompetitionInfo);
+			this.monthCompetitionInfo = new net.type.CompetitionInfoVO().parse(data.monthCompetitionInfo);
+			this.rankResultList = vox.net.parseArray(data.rankResultList, RankResultVO);
 			return this;
 		}
 	}

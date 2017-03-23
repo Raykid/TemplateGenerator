@@ -1,11 +1,11 @@
-$a-{for: type in getCustomTypes(fields)}
-/// <reference path="../$a-{getConfigByName(type.to).field}/$a-{type.to}.ts"/>
+$a-{for: name in getCustomNames(fields)}
+/// <reference path="../$a-{getConfigByName(name).field}/$a-{name}.ts"/>
 $a-{end for}
 
 namespace net.$a-{field}
 {
-    $a-{for: type in getCustomTypes(fields)}
-    import $a-{type.to} = net.$a-{getConfigByName(type.to).field}.$a-{type.to};
+    $a-{for: name in getCustomNames(fields)}
+    import $a-{name} = net.$a-{getConfigByName(name).field}.$a-{name};
     $a-{end for}
 	
 	/**

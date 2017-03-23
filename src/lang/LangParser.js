@@ -28,7 +28,7 @@ function parseConfig(root, langs) {
             // 设置isCustom
             type.customName = null;
             // 填充默认的customTypes
-            type.customTypes = [];
+            type.subCustomNames = [];
         }
         // 解析templates，将file指向的文件内容加载到content属性中
         for (var _b = 0, _c = config.templates; _b < _c.length; _b++) {

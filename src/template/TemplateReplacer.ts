@@ -36,7 +36,7 @@ export function replaceTemplate(
     }
     // 添加一些工具方法
     newConf.getConfigByName = getConfigByName;
-    newConf.getCustomTypes = getCustomTypes;
+    newConf.getCustomNames = getCustomNames;
     newConf.removeDuplicate = removeDuplicate;
     newConf.transformType = transformType;
     // 准备结果
@@ -71,31 +71,33 @@ export function replaceTemplate(
         return {} as any;
     }
 
-    function getCustomTypes(fields:configParser.ConfigField[]):langParser.LangType[]
+    function getCustomNames(fields:configParser.ConfigField[]):string[]
     {
-        let customTypes:langParser.LangType[] = [];
+        let customNames:string[] = [];
         for(let field of fields)
         {
-            customTypes = customTypes.concat(field.type.customTypes);
+            // 添加子类型
+            customNames = customNames.concat(field.type.subCustomNames);
+            // 添加本身
+            if(field.type.customName != null)
+            {
+                customNames.push(field.type.customName);
+            }
         }
-        return removeDuplicate(customTypes);
+        return removeDuplicate(customNames);
     }
 
-    function removeDuplicate(list:langParser.LangType[]):langParser.LangType[]
+    function removeDuplicate(list:string[]):string[]
     {
-        let tempList:langParser.LangType[] = [];
+        let tempList:string[] = [];
         for(let i:number = 0, lenI:number = list.length; i < lenI; i++)
         {
-            let item:langParser.LangType = list[i];
-            for(let j:number = 0, lenJ:number = tempList.length; j < lenJ; j++)
+            let item:string = list[i];
+            if(tempList.indexOf(item) >= 0)
             {
-                let tempItem:langParser.LangType = tempList[j];
-                if(tempItem.from == item.from && tempItem.to == item.to && tempItem.class == item.class)
-                {
-                    list.splice(i, 1);
-                    i --;
-                    lenI --;
-                }
+                list.splice(i, 1);
+                i --;
+                lenI --;
             }
             tempList.push(item);
         }
@@ -114,7 +116,7 @@ export function replaceTemplate(
                     to: conf.to,
                     class: conf.class,
                     customName: null,
-                    customTypes: []
+                    subCustomNames: []
                 };
             }
             else if(conf.from instanceof RegExp)
@@ -122,7 +124,7 @@ export function replaceTemplate(
                 let res:RegExpExecArray = conf.from.exec(type);
                 if(res)
                 {
-                    let customTypes:langParser.LangType[] = [];
+                    let subCustomNames:string[] = [];
                     let tempStrs:string[] = [];
                     let tempStr:string = res[0];
                     let customName:string = null;
@@ -142,14 +144,14 @@ export function replaceTemplate(
                         // 截断tempStr
                         tempStr = tempStr.substr(index + count);
                         // 连接customTypes
-                        customTypes = customTypes.concat(subType.customTypes);
+                        subCustomNames = subCustomNames.concat(subType.subCustomNames);
                         // 如果subType是customType则将其推入数组
-                        if(subType.customName != null) customTypes.push(subType);
+                        if(subType.customName != null) subCustomNames.push(subType.customName);
                         // 计算自身的isCustom属性，需要递归地将所有子类型都做或运算
                         customName = customName || transformType(before).customName;
                     }
                     // 将customTypes做一次去重
-                    customTypes = removeDuplicate(customTypes);
+                    subCustomNames = removeDuplicate(subCustomNames);
                     // 将tempStr剩余部分推入数组
                     tempStrs.push(tempStr);
                     // 将整个段落的后面部分推入数组
@@ -161,7 +163,7 @@ export function replaceTemplate(
                         to: newType.replace(conf.from, conf.to),
                         class: conf.class,
                         customName: customName,
-                        customTypes: customTypes
+                        subCustomNames: subCustomNames
                     };
                 }
             }
@@ -172,7 +174,7 @@ export function replaceTemplate(
             to: type,
             class: "custom",
             customName: type,
-            customTypes: []
+            subCustomNames: []
         };
     }
 }

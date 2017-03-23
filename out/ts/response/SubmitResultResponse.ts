@@ -20,7 +20,7 @@ namespace net.response
         public questionScore:number;
 
 		/** 小题答案 */
-        public blankRightList:undefined = new undefined();
+        public blankRightList:boolean[] = [];
 
 		/** 资格赛结果（全部答完） */
         public dayCompetitionResult:any;
@@ -38,7 +38,7 @@ namespace net.response
 				answerCorrect: this.answerCorrect,				
 				totalScore: this.totalScore,				
 				questionScore: this.questionScore,				
-				blankRightList: this.blankRightList.pack(),				
+				blankRightList: vox.net.packArray(this.blankRightList),				
 				dayCompetitionResult: this.dayCompetitionResult,				
 				weekCompetitionResult: this.weekCompetitionResult,				
 				monthCompetitionResult: this.monthCompetitionResult				
@@ -54,7 +54,7 @@ namespace net.response
 			this.answerCorrect = data.answerCorrect;
 			this.totalScore = data.totalScore;
 			this.questionScore = data.questionScore;
-			this.blankRightList = new net.undefined.undefined().parse(data.blankRightList);
+			this.blankRightList = vox.net.parseArray(data.blankRightList);
 			this.dayCompetitionResult = data.dayCompetitionResult;
 			this.weekCompetitionResult = data.weekCompetitionResult;
 			this.monthCompetitionResult = data.monthCompetitionResult;

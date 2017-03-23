@@ -165,18 +165,22 @@
 					},
 					{
 						"name": "dayCompetitionInfo",
+						"type": "CompetitionInfoVO",
 						"comment": "资格赛信息"
 					},
 					{
 						"name": "weekCompetitionInfo",
+						"type": "CompetitionInfoVO",
 						"comment": "排位赛信息"
 					},
 					{
 						"name": "monthCompetitionInfo",
+						"type": "CompetitionInfoVO",
 						"comment": "月赛信息"
 					},
 					{
 						"name": "rankResultList",
+						"type": "RankResultVO[]",
 						"comment": "发奖结果popUp，因为每次比赛结束只显示一次，如有该字段则弹出，没有该字段时不处理"
 					}
 				]
@@ -249,6 +253,7 @@
 				"fields": [
 					{
 						"name": "questionList",
+						"type": "String[]",
 						"comment": "题目id列表"
 					},
 					{
@@ -284,6 +289,7 @@
 					},
 					{
 						"name": "blankRightList",
+						"type": "boolean[]",
 						"comment": "小题答案"
 					},
 					{
@@ -309,6 +315,7 @@
 				"fields": [
 					{
 						"name": "giftList",
+						"type": "GiftVO[]",
 						"comment": "礼包列表(这块前端写死也是OK的，固定数据)"
 					},
 					{
@@ -329,6 +336,7 @@
 				"fields": [
 					{
 						"name": "receivedGiftList",
+						"type": "GiftVO[]",
 						"comment": "已领取的礼包列表"
 					},
 					{
@@ -359,14 +367,17 @@
 					},
 					{
 						"name": "studentGradeInfo",
+						"type": "StudentGradeInfoVO",
 						"comment": "用户本人个人成绩信息 (该字段可能不存在)"
 					},
 					{
 						"name": "provinceGradeInfoList",
+						"type": "StudentGradeInfoVO[]",
 						"comment": "省榜单前100名成绩信息,字段可能不存在(前100名有时会对应100多个学生)"
 					},
 					{
 						"name": "pageInfo",
+						"type": "PageInfoVO",
 						"comment": "分页信息 "
 					}
 				]
@@ -392,10 +403,12 @@
 					},
 					{
 						"name": "studentGradeInfo",
+						"type": "StudentGradeInfoVO",
 						"comment": "用户本人个人成绩信息 (该字段可能不存在)"
 					},
 					{
 						"name": "schoolGradeInfoList",
+						"type": "StudentGradeInfoVO[]",
 						"comment": "校榜前20名成绩,字段可能不存在(前20名有时会对应20多个学生)"
 					}
 				]
@@ -426,14 +439,17 @@
 					},
 					{
 						"name": "studentGradeInfo",
+						"type": "StudentGradeInfoVO",
 						"comment": "用户本人个人成绩信息 (该字段可能不存在)"
 					},
 					{
 						"name": "countryGradeInfoList",
+						"type": "StudentGradeInfoVO[]",
 						"comment": "全国榜单学生信息，根据分页信息获取的数据；没有数据时,字段不存在"
 					},
 					{
 						"name": "pageInfo",
+						"type": "PageInfoVO",
 						"comment": "分页信息 "
 					}
 				]
@@ -690,6 +706,7 @@
 					},
 					{
 						"name": "giftList",
+						"type": "GiftVO[]",
 						"comment": "礼物列表"
 					}
 				]

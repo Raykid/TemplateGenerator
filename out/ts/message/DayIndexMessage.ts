@@ -39,7 +39,8 @@ namespace net.messages
 	{
 		public exec():void
 		{
-			this.getMessage().__data = {
+			var msg:DayIndexMessage = this.getMessage() as DayIndexMessage;
+			msg.__data = {
 			};
 			super.exec();
 		}

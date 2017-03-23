@@ -39,7 +39,8 @@ namespace net.messages
 	{
 		public exec():void
 		{
-			this.getMessage().__data = {
+			var msg:GetSchoolRankMessage = this.getMessage() as GetSchoolRankMessage;
+			msg.__data = {
 			};
 			super.exec();
 		}

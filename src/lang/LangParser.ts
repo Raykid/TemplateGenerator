@@ -31,7 +31,7 @@ export function parseConfig(root:string, langs:string[]):Lang[]
             // 设置isCustom
             type.customName = null;
             // 填充默认的customTypes
-            type.customTypes = [];
+            type.subCustomNames = [];
         }
         // 解析templates，将file指向的文件内容加载到content属性中
         for(let template of config.templates)
@@ -64,7 +64,7 @@ export interface LangType
     to:string;
     class:string;
     customName:string;
-    customTypes:any[];
+    subCustomNames:string[];
 }
 
 export interface LangTemplate

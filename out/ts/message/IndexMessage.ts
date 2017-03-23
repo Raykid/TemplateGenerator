@@ -39,7 +39,8 @@ namespace net.messages
 	{
 		public exec():void
 		{
-			this.getMessage().__data = {
+			var msg:IndexMessage = this.getMessage() as IndexMessage;
+			msg.__data = {
 			};
 			super.exec();
 		}

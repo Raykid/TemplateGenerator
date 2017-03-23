@@ -24,7 +24,7 @@ function replaceTemplate(typeDict, template, confDict, conf) {
     }
     // 添加一些工具方法
     newConf.getConfigByName = getConfigByName;
-    newConf.getCustomTypes = getCustomTypes;
+    newConf.getCustomNames = getCustomNames;
     newConf.removeDuplicate = removeDuplicate;
     newConf.transformType = transformType;
     // 准备结果
@@ -54,25 +54,27 @@ function replaceTemplate(typeDict, template, confDict, conf) {
         }
         return {};
     }
-    function getCustomTypes(fields) {
-        var customTypes = [];
+    function getCustomNames(fields) {
+        var customNames = [];
         for (var _i = 0, fields_1 = fields; _i < fields_1.length; _i++) {
             var field = fields_1[_i];
-            customTypes = customTypes.concat(field.type.customTypes);
+            // 添加子类型
+            customNames = customNames.concat(field.type.subCustomNames);
+            // 添加本身
+            if (field.type.customName != null) {
+                customNames.push(field.type.customName);
+            }
         }
-        return removeDuplicate(customTypes);
+        return removeDuplicate(customNames);
     }
     function removeDuplicate(list) {
         var tempList = [];
         for (var i = 0, lenI = list.length; i < lenI; i++) {
             var item = list[i];
-            for (var j = 0, lenJ = tempList.length; j < lenJ; j++) {
-                var tempItem = tempList[j];
-                if (tempItem.from == item.from && tempItem.to == item.to && tempItem.class == item.class) {
-                    list.splice(i, 1);
-                    i--;
-                    lenI--;
-                }
+            if (tempList.indexOf(item) >= 0) {
+                list.splice(i, 1);
+                i--;
+                lenI--;
             }
             tempList.push(item);
         }
@@ -88,13 +90,13 @@ function replaceTemplate(typeDict, template, confDict, conf) {
                     to: conf_2.to,
                     class: conf_2.class,
                     customName: null,
-                    customTypes: []
+                    subCustomNames: []
                 };
             }
             else if (conf_2.from instanceof RegExp) {
                 var res_1 = conf_2.from.exec(type);
                 if (res_1) {
-                    var customTypes = [];
+                    var subCustomNames = [];
                     var tempStrs = [];
                     var tempStr = res_1[0];
                     var customName = null;
@@ -113,15 +115,15 @@ function replaceTemplate(typeDict, template, confDict, conf) {
                         // 截断tempStr
                         tempStr = tempStr.substr(index + count);
                         // 连接customTypes
-                        customTypes = customTypes.concat(subType.customTypes);
+                        subCustomNames = subCustomNames.concat(subType.subCustomNames);
                         // 如果subType是customType则将其推入数组
                         if (subType.customName != null)
-                            customTypes.push(subType);
+                            subCustomNames.push(subType.customName);
                         // 计算自身的isCustom属性，需要递归地将所有子类型都做或运算
                         customName = customName || transformType(before).customName;
                     }
                     // 将customTypes做一次去重
-                    customTypes = removeDuplicate(customTypes);
+                    subCustomNames = removeDuplicate(subCustomNames);
                     // 将tempStr剩余部分推入数组
                     tempStrs.push(tempStr);
                     // 将整个段落的后面部分推入数组
@@ -133,7 +135,7 @@ function replaceTemplate(typeDict, template, confDict, conf) {
                         to: newType.replace(conf_2.from, conf_2.to),
                         class: conf_2.class,
                         customName: customName,
-                        customTypes: customTypes
+                        subCustomNames: subCustomNames
                     };
                 }
             }
@@ -144,7 +146,7 @@ function replaceTemplate(typeDict, template, confDict, conf) {
             to: type,
             class: "custom",
             customName: type,
-            customTypes: []
+            subCustomNames: []
         };
     }
 }

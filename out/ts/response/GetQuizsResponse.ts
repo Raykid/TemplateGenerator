@@ -1,6 +1,8 @@
+/// <reference path="../undefined/String.ts"/>
 
 namespace net.response
 {
+    import String = net.undefined.String;
 	
 	/**
 	 * 
@@ -8,7 +10,7 @@ namespace net.response
 	export class GetQuizsResponse extends vox.net.BaseMessageType
 	{
 		/** 题目id列表 */
-        public questionList:undefined = new undefined();
+        public questionList:String[] = [];
 
 		/** 竞赛id */
         public competitionId:string;
@@ -16,7 +18,7 @@ namespace net.response
 		public pack():{[name:string]:any}
 		{
 			return {
-				questionList: this.questionList.pack(),				
+				questionList: vox.net.packArray(this.questionList),				
 				competitionId: this.competitionId				
 			};
 		}
@@ -26,7 +28,7 @@ namespace net.response
 			if(data == null) return null;
 			super.parse(data);
 			this.success = data.success;
-			this.questionList = new net.undefined.undefined().parse(data.questionList);
+			this.questionList = vox.net.parseArray(data.questionList, String);
 			this.competitionId = data.competitionId;
 			return this;
 		}

@@ -1,6 +1,6 @@
 /// <reference path="../$a-{getConfigByName(response.name).field}/$a-{response.name}.ts"/>
-$a-{for: type in getCustomTypes(fields)}
-/// <reference path="../$a-{getConfigByName(type.to).field}/$a-{type.to}.ts"/>
+$a-{for: name in getCustomNames(fields)}
+/// <reference path="../$a-{getConfigByName(name).field}/$a-{name}.ts"/>
 $a-{end for}
 
 /**
@@ -9,8 +9,8 @@ $a-{end for}
 namespace net.messages
 {
     import $a-{response.name} = $a-{response.pkg}.$a-{response.name};
-    $a-{for: type in getCustomTypes(fields)}
-    import $a-{type.to} = net.$a-{getConfigByName(type.to).field}.$a-{type.to};
+    $a-{for: name in getCustomNames(fields)}
+    import $a-{name} = net.$a-{getConfigByName(name).field}.$a-{name};
     $a-{end for}
 	
 	/**
@@ -61,7 +61,8 @@ namespace net.messages
 	{
 		public exec():void
 		{
-			this.getMessage().__data = {
+			var msg:$a-{name}Message = this.getMessage() as $a-{name}Message;
+			msg.__data = {
 				$a-{for: field in fields}
 				$a-{field.name}: msg.$a-{field.name}$a-{if: $index < fields.length - 1},$a-{end if}// $a-{field.type.to} - $a-{field.comment}
 				$a-{end for}

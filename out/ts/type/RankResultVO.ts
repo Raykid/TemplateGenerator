@@ -1,6 +1,8 @@
+/// <reference path="../type/GiftVO.ts"/>
 
 namespace net.type
 {
+    import GiftVO = net.type.GiftVO;
 	
 	/**
 	 * 
@@ -20,7 +22,7 @@ namespace net.type
         public hasGift:boolean;
 
 		/** 礼物列表 */
-        public giftList:undefined = new undefined();
+        public giftList:GiftVO[] = [];
 
 		public pack():{[name:string]:any}
 		{
@@ -29,7 +31,7 @@ namespace net.type
 				rankType: this.rankType,				
 				rank: this.rank,				
 				hasGift: this.hasGift,				
-				giftList: this.giftList.pack()				
+				giftList: vox.net.packArray(this.giftList)				
 			};
 		}
 		
@@ -42,7 +44,7 @@ namespace net.type
 			this.rankType = data.rankType;
 			this.rank = data.rank;
 			this.hasGift = data.hasGift;
-			this.giftList = new net.undefined.undefined().parse(data.giftList);
+			this.giftList = vox.net.parseArray(data.giftList, GiftVO);
 			return this;
 		}
 	}

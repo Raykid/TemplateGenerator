@@ -39,7 +39,8 @@ namespace net.messages
 	{
 		public exec():void
 		{
-			this.getMessage().__data = {
+			var msg:GiftIndexMessage = this.getMessage() as GiftIndexMessage;
+			msg.__data = {
 			};
 			super.exec();
 		}
