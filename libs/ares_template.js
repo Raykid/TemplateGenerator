@@ -173,8 +173,28 @@ var ares;
                     node.children.forEach(this.mutateValue, this);
                 }
             };
+            TemplateCompiler.prototype.getEndIndex = function (str, startIndex) {
+                var startIcons = ["{", "\"", "'", "`", "(", "["];
+                var endIcons = ["}", "\"", "'", "`", ")", "]"];
+                var stack = [0];
+                for (var i = startIndex, len = str.length; i < len; i++) {
+                    var tempChar = str.charAt(i);
+                    var startIndex = startIcons.indexOf(tempChar);
+                    var endIndex = endIcons.indexOf(tempChar);
+                    // 如果是终结符号且当前栈顶是对应起始符号，则出栈
+                    if (endIndex >= 0 && stack[stack.length - 1] == endIndex)
+                        stack.pop();
+                    else if (startIndex >= 0)
+                        stack.push(startIndex);
+                    // 如果stack已经空了，则立即返回当前字符的下一个索引
+                    if (stack.length <= 0)
+                        return (i + 1);
+                }
+                return -1;
+            };
             TemplateCompiler.prototype.transformToNode = function (str) {
-                var regAres = /\$a\-\{\s*(.*?)\s*\}/g;
+                var regAres = /\$a\-\{/g;
+                var regTrim = /^\s*([\s\S]*)\s*$/;
                 var regCmd = /^\s*([a-zA-Z0-9_]+?)\s*:\s*(.+?)\s*$/;
                 var regEnd = /^\s*end\s+([a-zA-Z0-9_]+?)\s*$/;
                 // 遍历整个str，使用ares命令将其分隔成数组
@@ -184,6 +204,14 @@ var ares;
                 var cmdStack = [];
                 var eatCount;
                 for (var resAres = regAres.exec(str); resAres != null; resAres = regAres.exec(str)) {
+                    var endIndex = this.getEndIndex(str, resAres.index + resAres[0].length);
+                    if (endIndex < 0) {
+                        console.error("\u6307\u4EE4\u6CA1\u6709\u7ED3\u675F" + str.substr(resAres.index));
+                        return null;
+                    }
+                    regAres.lastIndex = endIndex;
+                    var whole = str.substring(resAres.index, endIndex);
+                    var content = whole.substring(resAres[0].length, whole.length - 1);
                     eatCount = 0;
                     // 把ares命令前面的部分以简单文本形式推入数组（如果有的话）
                     if (resAres.index > index) {
@@ -193,24 +221,28 @@ var ares;
                         });
                     }
                     // 把ares命令部分推入数组
-                    var resEnd = regEnd.exec(resAres[1]);
+                    var resEnd = regEnd.exec(content);
                     if (resEnd != null) {
                         // 是命令的终结指令，需要清除节点两侧的空白符
                         clearNode();
                         // 弹出一个命令
                         var start = cmdStack.pop();
                         // 判断正确性
-                        if (start == null)
+                        if (start == null) {
                             console.error("\u7EC8\u7ED3\u6307\u4EE4(" + resEnd[1] + ")\u6CA1\u6709\u5BF9\u5E94\u7684\u8D77\u59CB\u6307\u4EE4");
-                        if (start.cmd != resEnd[1])
+                            return null;
+                        }
+                        if (start.cmd != resEnd[1]) {
                             console.error("\u8D77\u59CB\u6307\u4EE4(" + start.cmd + ")\u4E0E\u7EC8\u7ED3\u6307\u4EE4(" + resEnd[1] + ")\u4E0D\u5339\u914D");
+                            return null;
+                        }
                         // 将起始指令与终结指令之间所有节点放入该命令内部
                         var startIndex = nodes.indexOf(start);
                         start.children = nodes.splice(startIndex + 1);
                     }
                     else {
                         // 不是终结指令
-                        var resCmd = regCmd.exec(resAres[1]);
+                        var resCmd = regCmd.exec(content);
                         if (resCmd != null) {
                             // 是起始命令，需要清除节点两侧的空白符
                             clearNode();
@@ -223,7 +255,7 @@ var ares;
                             // 推入命令栈
                             cmdStack.push(node);
                         }
-                        else if (resAres[1] == "") {
+                        else if (content == "") {
                             // 是占位符，需要清除节点两侧的空白符
                             clearNode();
                         }
@@ -231,12 +263,12 @@ var ares;
                             // 只是简单的表达式
                             nodes.push({
                                 cmd: "exp",
-                                exp: resAres[1]
+                                exp: content
                             });
                         }
                     }
                     // 修改index指向
-                    index = resAres.index + resAres[0].length + eatCount;
+                    index = resAres.index + whole.length + eatCount;
                 }
                 if (index < length) {
                     // 把最后一点字符推入数组
@@ -246,8 +278,10 @@ var ares;
                     });
                 }
                 // 如果命令栈不为空，则表示起始指令没有终结指令
-                if (cmdStack.length > 0)
+                if (cmdStack.length > 0) {
                     console.error("\u8D77\u59CB\u6307\u4EE4" + cmdStack[0].cmd + "\u6CA1\u6709\u5BF9\u5E94\u7684\u7EC8\u7ED3\u6307\u4EE4");
+                    return null;
+                }
                 // 返回结果
                 return {
                     cmd: null,
@@ -264,7 +298,7 @@ var ares;
                         lastNode.exp = lastNode.exp.substring(0, index + 1) + lastNode.exp.substr(index + 1).replace(regBlankBefore, "");
                     }
                     // 再把本行直到换行符为止的空白符都吃掉
-                    regBlankAfter.lastIndex = resAres.index + resAres[0].length;
+                    regBlankAfter.lastIndex = resAres.index + whole.length;
                     var resBlank = regBlankAfter.exec(str);
                     if (resBlank)
                         eatCount = resBlank[0].length;
