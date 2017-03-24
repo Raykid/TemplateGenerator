@@ -78,7 +78,7 @@ var ares;
                             Object.defineProperty(newScope, "$index", {
                                 configurable: true,
                                 enumerable: false,
-                                value: key,
+                                value: (value instanceof Array ? parseInt(key) : key),
                                 writable: false
                             });
                             Object.defineProperty(newScope, res[1], {
