@@ -56,13 +56,29 @@ function parserConfig(root) {
                     var res = regConf.exec(value);
                     if (res) {
                         // 需要替换引用
-                        var tempConfs = confDict[res[1]];
+                        var field_1 = res[1];
+                        var name_1 = res[2];
+                        var tempConfs = confDict[field_1];
+                        var success = false;
                         for (var _i = 0, tempConfs_1 = tempConfs; _i < tempConfs_1.length; _i++) {
                             var tempConf = tempConfs_1[_i];
-                            if (tempConf.name == res[2]) {
+                            if (tempConf.name == name_1) {
                                 conf_1[key] = tempConf;
+                                success = true;
                                 break;
                             }
+                        }
+                        // 如果没有找到引用，则造一个引用
+                        if (!success) {
+                            var tempConf = {
+                                name: name_1,
+                                comment: conf_1.comment,
+                                file: conf_1.file,
+                                field: field_1,
+                                fields: []
+                            };
+                            conf_1[key] = tempConf;
+                            tempConfs.push(tempConf);
                         }
                     }
                 }

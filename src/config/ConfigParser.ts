@@ -60,14 +60,31 @@ export function parserConfig(root:string):ConfigDict
                     if(res)
                     {
                         // 需要替换引用
-                        let tempConfs:Config[] = confDict[res[1]];
+                        let field:string = res[1];
+                        let name:string = res[2];
+                        let tempConfs:Config[] = confDict[field];
+                        let success:boolean = false;
                         for(let tempConf of tempConfs)
                         {
-                            if(tempConf.name == res[2])
+                            if(tempConf.name == name)
                             {
                                 conf[key] = tempConf;
+                                success = true;
                                 break;
                             }
+                        }
+                        // 如果没有找到引用，则造一个引用
+                        if(!success)
+                        {
+                            let tempConf:Config = {
+                                name: name,
+                                comment: conf.comment,
+                                file: conf.file,
+                                field: field,
+                                fields: []
+                            };
+                            conf[key] = tempConf;
+                            tempConfs.push(tempConf);
                         }
                     }
                 }
@@ -134,6 +151,8 @@ export interface Config
 {
     /** 消息配置名称 */
     name:string;
+    /** 消息注释 */
+    comment:string;
     /** 所属文件名 */
     file:string;
     /** 消息所属域名 */
