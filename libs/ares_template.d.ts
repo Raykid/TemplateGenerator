@@ -46,6 +46,7 @@ declare module ares.template
 
     export class TemplateCompiler
     {
+        root:TemplateNode;
         constructor(template:string, onUpdate:(text:string)=>void, config?:PIXIBindConfig);
         compile(node:TemplateNode, scope:any):void;
         init(entity:IAres):void;

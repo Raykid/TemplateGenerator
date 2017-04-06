@@ -1,5 +1,5 @@
 $a-{for: msg in message}
-/// <reference path="$a-{getConfigByName(msg.name).field}/$a-{msg.name}Message.ts"/>
+/// <reference path="$a-{msg.field}/$a-{msg.name}Message.ts"/>
 $a-{end for}
 
 /**
@@ -14,7 +14,7 @@ namespace net
 		{
 			var dict:{[name:string]:BaseRequestCommandClass} = {};
 			$a-{for: msg in message}
-			dict["$a-{msg.name}"] = net.messages.$a-{msg.name}Command;
+			dict["$a-{msg.name}"] = net.message.$a-{msg.name}Command;
 			$a-{end for}
 			return dict;
 		}

@@ -11,7 +11,7 @@ namespace net.$a-{field}
 	/**
 	 * $a-{comment}
 	 */
-	export class $a-{name} extends vox.net.BaseMessageType
+	export class $a-{name}$a-{if: field == "response"}Response$a-{end if}$a-{" "}extends vox.net.BaseMessageType
 	{
 		$a-{for: field in fields}
 		/** $a-{field.comment} */
@@ -44,7 +44,7 @@ namespace net.$a-{field}
 			};
 		}
 		
-		public parse(data:any):$a-{name}
+		public parse(data:any):$a-{name}$a-{if: field == "response"}Response$a-{end if}$a-{""}
 		{
 			if(data == null) return null;
 			super.parse(data);

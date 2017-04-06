@@ -1,7 +1,10 @@
+/// <reference path="../../libs/xml2js/index.d.ts"/>
+
 /**
  * Created by Raykid on 2017/3/17.
  */
 import * as fs from "fs";
+import * as xml2js from "xml2js";
 var ares = require("../../libs/ares.js");
 var ares_template = require("../../libs/ares_template.js");
 
@@ -12,32 +15,73 @@ export function parserConfig(root:string):ConfigDict
     let files:string[] = fs.readdirSync(root + "/messages");
     for(let fileName of files)
     {
-        // 将所有文件中的配置整合到一起
+        let extArr:string[] = fileName.split(".");
+        let ext:string = extArr[extArr.length - 1];
         let str:string = fs.readFileSync(root + "/messages/" + fileName, "utf-8");
-        let tempConfDict:TempConfigDict = JSON.parse(str);
-        for(let field in tempConfDict)
+        let tempConfDict:TempConfigDict;
+        let doConf:()=>void = ()=>
         {
-            let tempConf:TempConfig = tempConfDict[field];
-            let confs:Config[] = confDict[field];
-            if(!confs) confDict[field] = confs = [];
-            // 遍历所有extra，每个extra生成一个Config对象
-            for(let exConf of tempConf.extra)
+            for(let field in tempConfDict)
             {
-                // 首先用default初始化一个Config
-                var temp:any = {fields: []};
-                var conf:Config = copyConfig(tempConf.default, temp);
-                // 再用exConf中的字段覆盖之
-                conf = copyConfig(exConf, conf);
-                // 添加所属文件名
-                conf.file = fileName;
-                // 添加所属域名
-                conf.field = field;
-                // 推入conf数组
-                confs.push(conf);
+                let tempConf:TempConfig = tempConfDict[field];
+                let confs:Config[] = confDict[field];
+                if(!confs) confDict[field] = confs = [];
+                // 遍历所有extra，每个extra生成一个Config对象
+                for(let exConf of tempConf.extra)
+                {
+                    // 首先用default初始化一个Config
+                    var temp:any = {fields: []};
+                    var conf:Config = copyConfig(tempConf.default, temp);
+                    // 再用exConf中的字段覆盖之
+                    conf = copyConfig(exConf, conf);
+                    // 添加所属文件名
+                    conf.file = fileName;
+                    // 添加所属域名
+                    conf.field = field;
+                    // 推入conf数组
+                    confs.push(conf);
+                }
             }
+            // 日志
+            console.log(`读取消息配置[${fileName}]成功`);
+        };
+        switch(ext)
+        {
+            case "json":
+                // 将所有文件中的配置整合到一起
+                tempConfDict = JSON.parse(str);
+                doConf();
+                break;
+            case "xml":
+                xml2js.parseString(str, (err:any, result:any)=>
+                {
+                    tempConfDict = {};
+                    for(let field in result.config)
+                    {
+                        let conf:any = {};
+                        let fieldData:any = result.config[field][0];
+                        let defaultData:any = fieldData.default[0];
+                        let extraDatas:any = fieldData.extra[0].item;
+                        // 设置default
+                        conf.default = defaultData.$;
+                        // 设置extra
+                        conf.extra = [];
+                        for(let extraData of extraDatas)
+                        {
+                            let tempExtra:any = extraData.$;
+                            if(extraData.field)
+                            {
+                                tempExtra.fields = extraData.field.map(item=>item.$, this);
+                            }
+                            conf.extra.push(tempExtra);
+                        }
+                        // 保存conf
+                        tempConfDict[field] = conf;
+                    }
+                    doConf();
+                });
+                break;
         }
-        // 日志
-        console.log(`读取消息配置[${fileName}]成功`);
     }
     // 如果conf内容中间有->符号，则表示要使用配置中的某项替换
     var regConf:RegExp = /^([a-zA-Z0-9_]+)\->([a-zA-Z0-9_]+)$/;

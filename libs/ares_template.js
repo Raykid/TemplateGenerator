@@ -100,7 +100,7 @@ var ares;
     })(template = ares.template || (ares.template = {}));
 })(ares || (ares = {}));
 /// <reference path="TemplateCommands.ts"/>
-/// <reference path="ares.d.ts"/>
+/// <reference path="../../../dist/ares.d.ts"/>
 /**
  * Created by Raykid on 2017/3/17.
  */
@@ -120,6 +120,13 @@ var ares;
                 this._onUpdate = onUpdate;
                 this._config = config;
             }
+            Object.defineProperty(TemplateCompiler.prototype, "root", {
+                get: function () {
+                    return this._root;
+                },
+                enumerable: true,
+                configurable: true
+            });
             TemplateCompiler.prototype.init = function (entity) {
                 this._entity = entity;
                 // 将整个模板文本编译为节点

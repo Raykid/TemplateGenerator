@@ -11,7 +11,7 @@ var fileSystemUtil = require("./file/FileSystemUtil");
 // 获取进程参数
 var args = process.argv.slice(2);
 // 下面打开就是测试代码
-// if(args.length <= 0) args = ["../test", "../out", "ts", "java"];
+// if(args.length <= 0) args = ["../test", "../out", "ts"];
 var root = args[0];
 var out = args[1];
 // 首先读取语言配置

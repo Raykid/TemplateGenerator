@@ -1,0 +1,160 @@
+<config>
+	<message>
+		<default method="GET" response="response->$a-{name}" comment="" domainIndex="0"/>
+        <extra>
+            <!-- 首页 -->
+            <item name="Index" comment="首页" url="/home/index"/>
+            <!-- 字词英雄闯关首页 -->
+            <item name="PassIndex" comment="字词英雄闯关首页" url="/Pass/index"/>
+            <!-- 字词英雄板块列表 -->
+            <item name="ListContentType" comment="字词英雄板块列表" url="/Pass/contentTypeList">
+                <field name="difficulty" type="string" comment="级别: 初级:junior; 中级:middle; 高级: senior" default="junior"/>
+            </item>
+            <!-- 字词英雄关卡列表 -->
+            <item name="ListPass" comment="字词英雄关卡列表" url="/Pass/passList">
+                <field name="difficulty" type="string" comment="级别: 初级:junior; 中级:middle; 高级: senior" default="junior"/>
+                <field name="content_type" type="int" comment="板块ID" default="1"/>
+            </item>
+            <!-- 开始闯关 -->
+            <item name="StartSession" comment="开始闯关" url="/Pass/startSession">
+                <field name="difficulty" type="string" comment="级别: 初级:junior; 中级:middle; 高级: senior" default="senior"/>
+                <field name="content_type" type="int" comment="板块ID" default="1"/>
+                <field name="pass_id" type="int" comment="关卡ID" default="1"/>
+            </item>
+            <!-- 闯关答题 -->
+            <item name="AnswerSession" comment="闯关答题" url="/Pass/answerSession">
+                <field name="session_id" type="string" comment="闯关会话ID"/>
+                <field name="answer_list" type="string" comment='答案列表{"q1":{"is_right":true,"cost_time":1500},"q2":{"is_right":true,"cost_time":1500}}'/>
+            </item>
+            <!-- 竞技场首页 -->
+            <item name="CompetitionIndex" comment="竞技场首页" url="/competition/index"/>
+            <!-- 开始竞技 -->
+            <item name="CompetitionAskSession" comment="开始竞技" url="/competition/askSession"/>
+            <!-- 竞技场答题 -->
+            <item name="CompetitionReplySession" comment="竞技场答题" url="/competition/replySession">
+                <field name="session_id" type="string" comment="竞技场会话ID" default="30015-58df8a2e460a939026000039"/>
+                <field name="question_num" type="string" comment="题号" default="0"/>
+                <field name="answer" type="string" comment="答案" default=""/>
+                <field name="cost_time" type="string" comment="答题时间" default="1"/>
+            </item>
+            <!-- 查看我的战绩 -->
+            <item name="CompetitionPkHistory" comment="查看我的战绩" url="/competition/getPkHistory"/>
+        </extra>
+	</message>
+	
+	<response>
+        <default comment=""/>
+        <extra>
+            <!-- 首页 -->
+            <item name="Index" comment="首页">
+                <field name="player_profile" type="PlayerProfile" comment="用户信息"/>
+                <field name="total_star" type="int" comment="总的应得星星数(按级别统计)" default="0"/>
+                <field name="new_task_rewards" type="int" comment="任务奖励领取提示" default="0"/>
+                <field name="new_achievement_rewards" type="int" comment="新的成就奖励数" default="0"/>
+            </item>
+            <!-- 闯关首页 -->
+            <item name="PassIndex" comment="闯关首页">
+                <field name="selected_difficulty" type="string" comment="已选中难度级别" default="senior"/>
+                <field name="difficulty_list" type="Difficulty[]" comment="难度级别列表" default="[]"/>
+            </item>
+            <!-- 字词英雄板块列表 -->
+            <item name="ListContentType" comment="字词英雄板块列表">
+                <field name="list" type="ContentType[]" comment="板块列表"/>
+            </item>
+            <!-- 字词英雄关卡列表 -->
+            <item name="ListPass" comment="字词英雄关卡列表">
+                <field name="list" type="Pass[]" comment="关卡列表"/>
+            </item>
+            <!-- 竞技场首页 -->
+            <item name="CompetitionIndex" comment="竞技场首页">
+                <field name="player_profile" type="PlayerProfile" comment="用户信息"/>
+            </item>
+            <!-- 开始竞技 -->
+            <item name="CompetitionAskSession" comment="开始竞技">
+                <field name="session_id" type="string" comment="竞技会话ID"/>
+                <field name="player_id" type="int" comment="用户ID"/>
+                <field name="question_num" type="int" comment="题目数量"/>
+                <field name="win_rate" type="int" comment="胜率"/>
+                <field name="finish_status" type="boolean" comment="完成状态"/>
+                <field name="is_robot" type="boolean" comment="是否是机器人"/>
+                <field name="questions" type="any[]" comment="题目信息"/>
+                <field name="question_do_list" type="any[]" comment="答题信息"/>
+                <field name="result" type="string" comment="竞技场完成状态"/>
+                <field name="player_mark" type="int" comment="用户本场竞技分数"/>
+                <field name="adversary_mark" type="int" comment="对手本场竞技分数"/>
+                <field name="adversary" type="any" comment="对手信息"/>
+                <field name="create_at" type="any" comment="竞技时间"/>
+            </item>
+            <!-- 竞技场答题页 -->
+            <item name="CompetitionReplySession" comment="竞技场答题页">
+                <field name="player_is_right" type="boolean" comment="用户答案是否正确"/>
+                <field name="adversary_is_right" type="boolean" comment="对手答案是否正确"/>
+                <field name="player_marks" type="int" comment="用户得分"/>
+                <field name="player_now_marks" type="int" comment="用户本场竞技当前总分"/>
+                <field name="adversary_marks" type="int" comment="对手得分"/>
+                <field name="adversary_now_marks" type="int" comment="对手本场竞技当前总分"/>
+                <field name="result" type="int" comment="竞技场状态(0:平; 1:胜; 2:输; -1:为开始)"/>
+                <field name="question_num" type="string" comment="当前题号"/>
+                <field name="city_rank" type="int" comment="全市排名"/>
+                <field name="state_rank" type="int" comment="全省排名"/>
+            </item>
+            <!-- 我的战绩 -->
+            <item name="CompetitionPkHistory" comment="我的战绩">
+                <field name="create_at" type="PkHistory[]" comment="我的战绩"/>
+            </item>
+        </extra>
+	</response>
+	
+	<type>
+        <default comment=""/>
+        <extra>
+            <!-- 板块数据 -->
+            <item name="ContentType" comment="板块数据">
+                <field name="id" type="int" comment="板块ID"/>
+                <field name="name" type="string" comment="板块名称"/>
+                <field name="total_star" type="int" comment="板块星星总数" default="0"/>
+                <field name="star" type="int" comment="已获得的星星数"/>
+                <field name="locked" type="boolean" comment="是否锁定"/>
+            </item>
+            <!-- 难度 -->
+            <item name="Difficulty" comment="难度">
+                <field name="key" type="string" comment="难度key"/>
+                <field name="name" type="string" comment="难度名称"/>
+            </item>
+            <!-- 关卡数据 -->
+            <item name="Pass" comment="关卡数据">
+                <field name="id" type="int" comment="关卡ID"/>
+                <field name="name" type="string" comment="关卡名称"/>
+                <field name="type" type="string" comment="pass|package: 关卡|礼包"/>
+                <field name="status" type="int" comment="关卡状态: 0.未开启;1.已开启;2.中途退出;3.订正;4.完成"/>
+                <field name="locked" type="boolean" comment="是否锁定"/>
+            </item>
+            <!-- 用户信息 -->
+            <item name="PlayerProfile" comment="用户信息">
+                <field name="real_name" type="string" comment="真实姓名"/>
+                <field name="user_id" type="int" comment="用户ID"/>
+                <field name="avatar_url" type="string" comment="用户头像"/>
+                <field name="ticket" type="int" comment="竞技卡数量"/>
+                <field name="gold" type="int" comment="金币"/>
+                <field name="credit" type="int" comment="自学积分"/>
+                <field name="score" type="int" comment="本周竞技总分"/>
+                <field name="city_rank" type="int" comment="城市排名"/>
+                <field name="state_rank" type="int" comment="全省排名"/>
+                <field name="star" type="int" comment="闯关星星数"/>
+                <field name="product_status" type="string" comment="开通状态 unpaid:未开通;active:已开通;expired:已过期"/>
+                <field name="expire_time" type="int" comment="过期时间"/>
+                <field name="player_status" type="int" comment="是否新手（0是，否则不是）"/>
+            </item>
+            <!-- 关卡数据 -->
+            <item name="PkHistory" comment="关卡数据">
+                <field name="adversary_name" type="string" comment="对手名称"/>
+                <field name="adversary_school" type="string" comment="对手学校(长)"/>
+                <field name="adversary_school_short" type="string" comment="对手学校(短)"/>
+                <field name="result" type="int" comment="pk结果"/>
+                <field name="player_mark" type="int" comment="我的得分"/>
+                <field name="adversary_mark" type="int" comment="对手得分"/>
+                <field name="create_at" type="int" comment="pk时间"/>
+            </item>
+        </extra>
+	</type>
+</config>

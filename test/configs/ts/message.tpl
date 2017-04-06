@@ -1,6 +1,6 @@
-/// <reference path="../$a-{getConfigByName(response.name).field}/$a-{response.name}.ts"/>
+/// <reference path="../$a-{response.field}/$a-{response.name}Response.ts"/>
 $a-{for: name in getCustomNames(fields)}
-/// <reference path="../$a-{getConfigByName(name).field}/$a-{name}.ts"/>
+/// <reference path="../$a-{field}/$a-{name}.ts"/>
 $a-{end for}
 
 /**
@@ -8,9 +8,9 @@ $a-{end for}
  */
 namespace net.message
 {
-    import $a-{response.name} = $a-{response.pkg}.$a-{response.name};
+    import $a-{response.name}Response = net.$a-{response.field}.$a-{response.name}Response;
     $a-{for: name in getCustomNames(fields)}
-    import $a-{name} = net.$a-{getConfigByName(name).field}.$a-{name};
+    import $a-{name} = net.$a-{field}.$a-{name};
     $a-{end for}
 	
 	/**
@@ -70,9 +70,9 @@ namespace net.message
 			super.exec();
 		}
 		
-		public parseResponse(result:any):$a-{response.name}
+		public parseResponse(result:any):$a-{response.name}Response
 		{
-            var response:$a-{response.name} = new $a-{response.name}();
+            var response:$a-{response.name}Response = new $a-{response.name}Response();
 			response.success = result["success"];
             response.parse(result);
 			return response;

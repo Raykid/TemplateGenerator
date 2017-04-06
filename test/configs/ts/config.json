@@ -60,25 +60,22 @@
     {
       "field": "global",
       "file": "MessageType.tpl",
-      "saveName": "MessageType.ts"
+      "saveName": "net/MessageType.ts"
     },
     {
       "field": "message",
       "file": "message.tpl",
-      "saveName": "$a-{field}/$a-{name}Message.ts"
+      "saveName": "net/$a-{field}/$a-{name}Message.ts"
     },
     {
       "field": "response",
       "file": "type.tpl",
-      "saveName": "$a-{field}/$a-{name}.ts"
+      "saveName": "net/$a-{field}/$a-{name}Response.ts"
     },
     {
       "field": "type",
       "file": "type.tpl",
-      "saveName": "$a-{field}/$a-{name}.ts"
+      "saveName": "net/$a-{field}/$a-{name}.ts"
     }
-  ],
-  "include": [
-	"messages.json"
   ]
 }

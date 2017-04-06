@@ -1,0 +1,66 @@
+{
+  "types": [
+    {
+      "from": "byte",
+      "to": "byte",
+      "class": "basic"
+    },
+    {
+      "from": "short",
+      "to": "short",
+      "class": "basic"
+    },
+    {
+      "from": "int",
+      "to": "int",
+      "class": "basic"
+    },
+    {
+      "from": "long",
+      "to": "long",
+      "class": "basic"
+    },
+    {
+      "from": "float",
+      "to": "float",
+      "class": "basic"
+    },
+    {
+      "from": "double",
+      "to": "double",
+      "class": "basic"
+    },
+    {
+      "from": "string",
+      "to": "string",
+      "class": "basic"
+    },
+    {
+      "from": "boolean",
+      "to": "boolean",
+      "class": "basic"
+    },
+    {
+      "from": "any",
+      "to": "any",
+      "class": "basic"
+    },
+    {
+      "from": "(\\w+)\\[\\]",
+      "to": "Array&lt;$1&gt;",
+      "class": "array"
+    },
+    {
+      "from": "{(\\w+):(\\w+)}",
+      "to": "Map&lt;$1, $2&gt;",
+      "class": "map"
+    }
+  ],
+  "templates": [
+    {
+      "field": "global",
+      "file": "wiki.tpl",
+      "saveName": "wiki.txt"
+    }
+  ]
+}
