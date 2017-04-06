@@ -1,0 +1,881 @@
+<h3>所有返回都会拥有的通用字段</h3>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+    <tr>
+      <td class="confluenceTd" colspan="1"><pre>success</pre></td>
+      <td class="confluenceTd" colspan="1">boolean</td>
+      <td class="confluenceTd" colspan="1">返回值时表示是否成功</td>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1"><pre>errorCode</pre></td>
+      <td class="confluenceTd" colspan="1">int</td>
+      <td class="confluenceTd" colspan="1">success是false时表示错误码</td>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1"><pre>info</pre></td>
+      <td class="confluenceTd" colspan="1">string</td>
+      <td class="confluenceTd" colspan="1">success是false时表示错误信息</td>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1"><pre>sys_time</pre></td>
+      <td class="confluenceTd" colspan="1">long</td>
+      <td class="confluenceTd" colspan="1">消息返回时刻的服务器时间戳，目前只有PHP服务器支持此字段的统一返回，请注意</td>
+    </tr>
+  </tbody>
+</table>
+<h3>1、首页：Index</h3>
+<p>1）请求路径：GET /home/index</p>
+<p>2）请求参数：无</p>
+<p>3）返回类型：<span style="color: #000000;">Index</span></p>
+<p>4）返回参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>player_profile</pre></td>
+      <td class="confluenceTd">
+		<pre><span>PlayerProfile</span></pre><table class="confluenceTable">
+				  <tbody>
+					<tr>
+					  <th class="confluenceTh">字段</th>
+					  <th class="confluenceTh">类型</th>
+					  <th class="confluenceTh">说明</th>
+					</tr>
+					<tr>
+						  <td class="confluenceTd" colspan="1"><pre>real_name</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">真实姓名</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>user_id</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">用户ID</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>avatar_url</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">用户头像</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>ticket</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">竞技卡数量</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>gold</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">金币</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>credit</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">自学积分</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>score</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">本周竞技总分</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>city_rank</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">城市排名</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>state_rank</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">全省排名</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>star</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">闯关星星数</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>product_status</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">开通状态 unpaid:未开通;active:已开通;expired:已过期</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>expire_time</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">过期时间</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>player_status</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">是否新手（0是，否则不是）</td>
+						</tr>
+				  </tbody>
+				</table>
+      </td>
+      <td class="confluenceTd">用户信息</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>total_star</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">总的应得星星数(按级别统计)</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>new_task_rewards</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">任务奖励领取提示</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>new_achievement_rewards</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">新的成就奖励数</td>
+	</tr>
+  </tbody>
+</table>
+<h3>2、字词英雄闯关首页：PassIndex</h3>
+<p>1）请求路径：GET /Pass/index</p>
+<p>2）请求参数：无</p>
+<p>3）返回类型：<span style="color: #000000;">PassIndex</span></p>
+<p>4）返回参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>selected_difficulty</pre></td>
+      <td class="confluenceTd">
+		string
+      </td>
+      <td class="confluenceTd">已选中难度级别</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>difficulty_list</pre></td>
+      <td class="confluenceTd">
+		<pre><span>Array&lt;Difficulty&gt;</span></pre><table class="confluenceTable">
+				  <tbody>
+					<tr>
+					  <th class="confluenceTh">字段</th>
+					  <th class="confluenceTh">类型</th>
+					  <th class="confluenceTh">说明</th>
+					</tr>
+					<tr>
+						  <td class="confluenceTd" colspan="1"><pre>key</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">难度key</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>name</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">难度名称</td>
+						</tr>
+				  </tbody>
+				</table>
+      </td>
+      <td class="confluenceTd">难度级别列表</td>
+	</tr>
+  </tbody>
+</table>
+<h3>3、字词英雄板块列表：ListContentType</h3>
+<p>1）请求路径：GET /Pass/contentTypeList</p>
+<p>2）请求参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">字段</div>
+          </div>
+        </div>
+      </th>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">类型</div>
+		  </div>
+        </div>
+      </th>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">说明</div>
+		  </div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">difficulty</td>
+      <td class="confluenceTd" colspan="1">string</td>
+      <td class="confluenceTd" colspan="1"><pre>级别: 初级:junior; 中级:middle; 高级: senior</pre></td>
+    </tr>
+  </tbody>
+</table>
+<p>3）返回类型：<span style="color: #000000;">ListContentType</span></p>
+<p>4）返回参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>list</pre></td>
+      <td class="confluenceTd">
+		<pre><span>Array&lt;ContentType&gt;</span></pre><table class="confluenceTable">
+				  <tbody>
+					<tr>
+					  <th class="confluenceTh">字段</th>
+					  <th class="confluenceTh">类型</th>
+					  <th class="confluenceTh">说明</th>
+					</tr>
+					<tr>
+						  <td class="confluenceTd" colspan="1"><pre>id</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">板块ID</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>name</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">板块名称</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>total_star</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">板块星星总数</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>star</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">已获得的星星数</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>locked</pre></td>
+						  <td class="confluenceTd" colspan="1">boolean</td>
+						  <td class="confluenceTd" colspan="1">是否锁定</td>
+						</tr>
+				  </tbody>
+				</table>
+      </td>
+      <td class="confluenceTd">板块列表</td>
+	</tr>
+  </tbody>
+</table>
+<h3>4、字词英雄关卡列表：ListPass</h3>
+<p>1）请求路径：GET /Pass/passList</p>
+<p>2）请求参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">字段</div>
+          </div>
+        </div>
+      </th>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">类型</div>
+		  </div>
+        </div>
+      </th>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">说明</div>
+		  </div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">difficulty</td>
+      <td class="confluenceTd" colspan="1">string</td>
+      <td class="confluenceTd" colspan="1"><pre>级别: 初级:junior; 中级:middle; 高级: senior</pre></td>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">content_type</td>
+      <td class="confluenceTd" colspan="1">int</td>
+      <td class="confluenceTd" colspan="1"><pre>板块ID</pre></td>
+    </tr>
+  </tbody>
+</table>
+<p>3）返回类型：<span style="color: #000000;">ListPass</span></p>
+<p>4）返回参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>list</pre></td>
+      <td class="confluenceTd">
+		<pre><span>Array&lt;Pass&gt;</span></pre><table class="confluenceTable">
+				  <tbody>
+					<tr>
+					  <th class="confluenceTh">字段</th>
+					  <th class="confluenceTh">类型</th>
+					  <th class="confluenceTh">说明</th>
+					</tr>
+					<tr>
+						  <td class="confluenceTd" colspan="1"><pre>id</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">关卡ID</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>name</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">关卡名称</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>type</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">pass|package: 关卡|礼包</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>status</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">关卡状态: 0.未开启;1.已开启;2.中途退出;3.订正;4.完成</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>locked</pre></td>
+						  <td class="confluenceTd" colspan="1">boolean</td>
+						  <td class="confluenceTd" colspan="1">是否锁定</td>
+						</tr>
+				  </tbody>
+				</table>
+      </td>
+      <td class="confluenceTd">关卡列表</td>
+	</tr>
+  </tbody>
+</table>
+<h3>5、开始闯关：StartSession</h3>
+<p>1）请求路径：GET /Pass/startSession</p>
+<p>2）请求参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">字段</div>
+          </div>
+        </div>
+      </th>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">类型</div>
+		  </div>
+        </div>
+      </th>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">说明</div>
+		  </div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">difficulty</td>
+      <td class="confluenceTd" colspan="1">string</td>
+      <td class="confluenceTd" colspan="1"><pre>级别: 初级:junior; 中级:middle; 高级: senior</pre></td>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">content_type</td>
+      <td class="confluenceTd" colspan="1">int</td>
+      <td class="confluenceTd" colspan="1"><pre>板块ID</pre></td>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">pass_id</td>
+      <td class="confluenceTd" colspan="1">int</td>
+      <td class="confluenceTd" colspan="1"><pre>关卡ID</pre></td>
+    </tr>
+  </tbody>
+</table>
+<p>3）返回类型：<span style="color: #000000;">StartSession</span></p>
+<p>4）返回参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+  </tbody>
+</table>
+<h3>6、闯关答题：AnswerSession</h3>
+<p>1）请求路径：GET /Pass/answerSession</p>
+<p>2）请求参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">字段</div>
+          </div>
+        </div>
+      </th>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">类型</div>
+		  </div>
+        </div>
+      </th>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">说明</div>
+		  </div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">session_id</td>
+      <td class="confluenceTd" colspan="1">string</td>
+      <td class="confluenceTd" colspan="1"><pre>闯关会话ID</pre></td>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">answer_list</td>
+      <td class="confluenceTd" colspan="1">string</td>
+      <td class="confluenceTd" colspan="1"><pre>答案列表{"q1":{"is_right":true,"cost_time":1500},"q2":{"is_right":true,"cost_time":1500}}</pre></td>
+    </tr>
+  </tbody>
+</table>
+<p>3）返回类型：<span style="color: #000000;">AnswerSession</span></p>
+<p>4）返回参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+  </tbody>
+</table>
+<h3>7、竞技场首页：CompetitionIndex</h3>
+<p>1）请求路径：GET /competition/index</p>
+<p>2）请求参数：无</p>
+<p>3）返回类型：<span style="color: #000000;">CompetitionIndex</span></p>
+<p>4）返回参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>player_profile</pre></td>
+      <td class="confluenceTd">
+		<pre><span>PlayerProfile</span></pre><table class="confluenceTable">
+				  <tbody>
+					<tr>
+					  <th class="confluenceTh">字段</th>
+					  <th class="confluenceTh">类型</th>
+					  <th class="confluenceTh">说明</th>
+					</tr>
+					<tr>
+						  <td class="confluenceTd" colspan="1"><pre>real_name</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">真实姓名</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>user_id</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">用户ID</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>avatar_url</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">用户头像</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>ticket</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">竞技卡数量</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>gold</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">金币</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>credit</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">自学积分</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>score</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">本周竞技总分</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>city_rank</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">城市排名</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>state_rank</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">全省排名</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>star</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">闯关星星数</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>product_status</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">开通状态 unpaid:未开通;active:已开通;expired:已过期</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>expire_time</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">过期时间</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>player_status</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">是否新手（0是，否则不是）</td>
+						</tr>
+				  </tbody>
+				</table>
+      </td>
+      <td class="confluenceTd">用户信息</td>
+	</tr>
+  </tbody>
+</table>
+<h3>8、开始竞技：CompetitionAskSession</h3>
+<p>1）请求路径：GET /competition/askSession</p>
+<p>2）请求参数：无</p>
+<p>3）返回类型：<span style="color: #000000;">CompetitionAskSession</span></p>
+<p>4）返回参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>session_id</pre></td>
+      <td class="confluenceTd">
+		string
+      </td>
+      <td class="confluenceTd">竞技会话ID</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>player_id</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">用户ID</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>question_num</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">题目数量</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>win_rate</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">胜率</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>finish_status</pre></td>
+      <td class="confluenceTd">
+		boolean
+      </td>
+      <td class="confluenceTd">完成状态</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>is_robot</pre></td>
+      <td class="confluenceTd">
+		boolean
+      </td>
+      <td class="confluenceTd">是否是机器人</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>questions</pre></td>
+      <td class="confluenceTd">
+		<pre><span>Array&lt;any&gt;</span></pre><table class="confluenceTable">
+				  <tbody>
+					<tr>
+					  <th class="confluenceTh">字段</th>
+					  <th class="confluenceTh">类型</th>
+					  <th class="confluenceTh">说明</th>
+					</tr>
+					
+				  </tbody>
+				</table>
+      </td>
+      <td class="confluenceTd">题目信息</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>question_do_list</pre></td>
+      <td class="confluenceTd">
+		<pre><span>Array&lt;any&gt;</span></pre><table class="confluenceTable">
+				  <tbody>
+					<tr>
+					  <th class="confluenceTh">字段</th>
+					  <th class="confluenceTh">类型</th>
+					  <th class="confluenceTh">说明</th>
+					</tr>
+					
+				  </tbody>
+				</table>
+      </td>
+      <td class="confluenceTd">答题信息</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>result</pre></td>
+      <td class="confluenceTd">
+		string
+      </td>
+      <td class="confluenceTd">竞技场完成状态</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>player_mark</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">用户本场竞技分数</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>adversary_mark</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">对手本场竞技分数</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>adversary</pre></td>
+      <td class="confluenceTd">
+		any
+      </td>
+      <td class="confluenceTd">对手信息</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>create_at</pre></td>
+      <td class="confluenceTd">
+		any
+      </td>
+      <td class="confluenceTd">竞技时间</td>
+	</tr>
+  </tbody>
+</table>
+<h3>9、竞技场答题：CompetitionReplySession</h3>
+<p>1）请求路径：GET /competition/replySession</p>
+<p>2）请求参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">字段</div>
+          </div>
+        </div>
+      </th>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">类型</div>
+		  </div>
+        </div>
+      </th>
+      <th class="confluenceTh">
+        <div class="tablesorter-header-inner">
+          <div class="tablesorter-header-inner">
+            <div class="tablesorter-header-inner">说明</div>
+		  </div>
+        </div>
+      </th>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">session_id</td>
+      <td class="confluenceTd" colspan="1">string</td>
+      <td class="confluenceTd" colspan="1"><pre>竞技场会话ID</pre></td>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">question_num</td>
+      <td class="confluenceTd" colspan="1">string</td>
+      <td class="confluenceTd" colspan="1"><pre>题号</pre></td>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">answer</td>
+      <td class="confluenceTd" colspan="1">string</td>
+      <td class="confluenceTd" colspan="1"><pre>答案</pre></td>
+    </tr>
+    <tr>
+      <td class="confluenceTd" colspan="1">cost_time</td>
+      <td class="confluenceTd" colspan="1">string</td>
+      <td class="confluenceTd" colspan="1"><pre>答题时间</pre></td>
+    </tr>
+  </tbody>
+</table>
+<p>3）返回类型：<span style="color: #000000;">CompetitionReplySession</span></p>
+<p>4）返回参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>player_is_right</pre></td>
+      <td class="confluenceTd">
+		boolean
+      </td>
+      <td class="confluenceTd">用户答案是否正确</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>adversary_is_right</pre></td>
+      <td class="confluenceTd">
+		boolean
+      </td>
+      <td class="confluenceTd">对手答案是否正确</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>player_marks</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">用户得分</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>player_now_marks</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">用户本场竞技当前总分</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>adversary_marks</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">对手得分</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>adversary_now_marks</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">对手本场竞技当前总分</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>result</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">竞技场状态(0:平; 1:胜; 2:输; -1:为开始)</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>question_num</pre></td>
+      <td class="confluenceTd">
+		string
+      </td>
+      <td class="confluenceTd">当前题号</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>city_rank</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">全市排名</td>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>state_rank</pre></td>
+      <td class="confluenceTd">
+		int
+      </td>
+      <td class="confluenceTd">全省排名</td>
+	</tr>
+  </tbody>
+</table>
+<h3>10、查看我的战绩：CompetitionPkHistory</h3>
+<p>1）请求路径：GET /competition/getPkHistory</p>
+<p>2）请求参数：无</p>
+<p>3）返回类型：<span style="color: #000000;">CompetitionPkHistory</span></p>
+<p>4）返回参数：</p>
+<table class="confluenceTable">
+  <tbody>
+    <tr>
+      <th class="confluenceTh">字段</th>
+      <th class="confluenceTh">类型</th>
+      <th class="confluenceTh">说明</th>
+	</tr>
+    <tr>
+      <td class="confluenceTd">
+        <pre>create_at</pre></td>
+      <td class="confluenceTd">
+		<pre><span>Array&lt;PkHistory&gt;</span></pre><table class="confluenceTable">
+				  <tbody>
+					<tr>
+					  <th class="confluenceTh">字段</th>
+					  <th class="confluenceTh">类型</th>
+					  <th class="confluenceTh">说明</th>
+					</tr>
+					<tr>
+						  <td class="confluenceTd" colspan="1"><pre>adversary_name</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">对手名称</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>adversary_school</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">对手学校(长)</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>adversary_school_short</pre></td>
+						  <td class="confluenceTd" colspan="1">string</td>
+						  <td class="confluenceTd" colspan="1">对手学校(短)</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>result</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">pk结果</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>player_mark</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">我的得分</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>adversary_mark</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">对手得分</td>
+						</tr><tr>
+						  <td class="confluenceTd" colspan="1"><pre>create_at</pre></td>
+						  <td class="confluenceTd" colspan="1">int</td>
+						  <td class="confluenceTd" colspan="1">pk时间</td>
+						</tr>
+				  </tbody>
+				</table>
+      </td>
+      <td class="confluenceTd">我的战绩</td>
+	</tr>
+  </tbody>
+</table>
