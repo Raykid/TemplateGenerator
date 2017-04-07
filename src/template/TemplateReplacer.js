@@ -43,9 +43,9 @@ function replaceTemplate(typeDict, template, confDict, conf) {
     // 返回结果
     return res;
     /**************** 下面是工具方法 ****************/
-    function getConfigByName(name) {
-        for (var field in confDict) {
-            var confs = confDict[field];
+    function getConfigByName(field, name) {
+        var confs = confDict[field];
+        if (confs) {
             for (var i = 0, len = confs.length; i < len; i++) {
                 var conf_1 = confs[i];
                 if (conf_1.name == name)

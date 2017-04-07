@@ -56,11 +56,11 @@ export function replaceTemplate(
     return res;
 
     /**************** 下面是工具方法 ****************/
-    function getConfigByName(name:string):configParser.Config
+    function getConfigByName(field:string, name:string):configParser.Config
     {
-        for(let field in confDict)
+        let confs:configParser.Config[] = confDict[field];
+        if(confs)
         {
-            let confs:configParser.Config[] = confDict[field];
             for(let i:number = 0, len:number = confs.length; i < len; i++)
             {
                 let conf:configParser.Config = confs[i];
