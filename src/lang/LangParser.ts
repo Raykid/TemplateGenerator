@@ -65,6 +65,7 @@ export interface LangType
     class:string;
     customName:string;
     subCustomNames:string[];
+    elementName:string;// 普通类型就返回
 }
 
 export interface LangTemplate

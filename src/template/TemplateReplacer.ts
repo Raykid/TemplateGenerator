@@ -116,7 +116,8 @@ export function replaceTemplate(
                     to: conf.to,
                     class: conf.class,
                     customName: null,
-                    subCustomNames: []
+                    subCustomNames: [],
+                    elementName: conf.from
                 };
             }
             else if(conf.from instanceof RegExp)
@@ -163,7 +164,8 @@ export function replaceTemplate(
                         to: newType.replace(conf.from, conf.to),
                         class: conf.class,
                         customName: customName,
-                        subCustomNames: subCustomNames
+                        subCustomNames: subCustomNames,
+                        elementName: res[res.length - 1]// 这里写的不太好，指定正则匹配的最后一个参数为元素类型
                     };
                 }
             }
@@ -174,7 +176,8 @@ export function replaceTemplate(
             to: type,
             class: "custom",
             customName: type,
-            subCustomNames: []
+            subCustomNames: [],
+            elementName: type
         };
     }
 }

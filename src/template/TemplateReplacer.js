@@ -90,7 +90,8 @@ function replaceTemplate(typeDict, template, confDict, conf) {
                     to: conf_2.to,
                     class: conf_2.class,
                     customName: null,
-                    subCustomNames: []
+                    subCustomNames: [],
+                    elementName: conf_2.from
                 };
             }
             else if (conf_2.from instanceof RegExp) {
@@ -135,7 +136,8 @@ function replaceTemplate(typeDict, template, confDict, conf) {
                         to: newType.replace(conf_2.from, conf_2.to),
                         class: conf_2.class,
                         customName: customName,
-                        subCustomNames: subCustomNames
+                        subCustomNames: subCustomNames,
+                        elementName: res_1[res_1.length - 1] // 这里写的不太好，指定正则匹配的最后一个参数为元素类型
                     };
                 }
             }
@@ -146,7 +148,8 @@ function replaceTemplate(typeDict, template, confDict, conf) {
             to: type,
             class: "custom",
             customName: type,
-            subCustomNames: []
+            subCustomNames: [],
+            elementName: type
         };
     }
 }
