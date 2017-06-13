@@ -73,12 +73,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 10:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -358,7 +358,7 @@ exports.commands = {
     },
     /** for命令 */
     for: function (context) {
-        var reg = /^\s*(\S+)\s+in\s+(\S+)\s*$/;
+        var reg = /^\s*(\S+)\s+in\s+([\s\S]+?)\s*$/;
         var res = reg.exec(context.node.exp);
         if (!res) {
             console.error("for命令表达式错误：" + context.node.exp);
