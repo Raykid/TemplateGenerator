@@ -8,14 +8,14 @@
 * [根目录]
 	* configs(语言配置)
 	    * [语言名称，如ts、java等]
-	        * [config.json](#config)
-	        * [[模板文件]](#templates)
+	        * [config.json](#configjson)
+	        * [[模板文件]](#模板文件)
 	* messages(消息配置)
-	    * [[消息配置文件，支持XML或JSON]](#messages)
+	    * [[消息配置文件]](#消息配置文件)
 
 ## 配置文件简单说明
 
-### <span id = "config">config.json</span>
+### config.json
 
 以json形式保存当前语言特殊的配置项，包括类型对照表、模板作用域、黑白名单。
 
@@ -123,7 +123,7 @@
 }
 ```
 
-### <span id="templates">[模板文件]</span>
+### [模板文件]
 
 生成最终代码所使用的模板。
 
@@ -199,7 +199,7 @@ namespace net
 ```
 
 
-### <span id = "messages">[消息配置文件]</span>
+### [消息配置文件]
 
 用于描述消息结构的配置文件，和输出的语言无关。目前支持JSON和XML两种结构。
 * 基本结构说明
