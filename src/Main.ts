@@ -1,8 +1,7 @@
-/// <reference path="node.d.ts"/>
-
 /**
  * Created by Raykid on 2017/3/16.
  */
+import * as path from "path";
 import langParser = require("./lang/LangParser");
 import configParser = require("./config/ConfigParser");
 import templateReplacer = require("./template/TemplateReplacer");
@@ -12,7 +11,11 @@ import fileSystemUtil = require("./file/FileSystemUtil");
 let args:string[] = process.argv.slice(2);
 
 // 下面打开就是测试代码
-// if(args.length <= 0) args = ["../test", "../out", "ts"];
+// if(args.length <= 0) args = [
+//     path.resolve(__dirname, "../test"),
+//     path.resolve(__dirname, "../out"),
+//     "olympus"
+// ];
 
 let root:string = args[0];
 let out:string = args[1];

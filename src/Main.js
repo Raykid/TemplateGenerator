@@ -1,9 +1,5 @@
-/// <reference path="node.d.ts"/>
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * Created by Raykid on 2017/3/16.
- */
 var langParser = require("./lang/LangParser");
 var configParser = require("./config/ConfigParser");
 var templateReplacer = require("./template/TemplateReplacer");
@@ -11,7 +7,11 @@ var fileSystemUtil = require("./file/FileSystemUtil");
 // 获取进程参数
 var args = process.argv.slice(2);
 // 下面打开就是测试代码
-// if(args.length <= 0) args = ["../test", "../out", "ts"];
+// if(args.length <= 0) args = [
+//     path.resolve(__dirname, "../test"),
+//     path.resolve(__dirname, "../out"),
+//     "olympus"
+// ];
 var root = args[0];
 var out = args[1];
 // 首先读取语言配置

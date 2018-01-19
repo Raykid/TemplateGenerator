@@ -1,5 +1,5 @@
-/// <reference path="../../libs/xml2js/index.d.ts"/>
 "use strict";
+/// <reference path="../../libs/xml2js/index.d.ts"/>
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by Raykid on 2017/3/17.
@@ -36,6 +36,10 @@ function parserConfig(root) {
                     conf.file = fileName;
                     // 添加所属域名
                     conf.field = field;
+                    // 添加默认配置
+                    conf.default = tempConf.default;
+                    // 添加自主配置
+                    conf.extra = exConf;
                     // 推入conf数组
                     confs.push(conf);
                 }
@@ -59,6 +63,11 @@ function parserConfig(root) {
                         var extraDatas = fieldData.extra[0].item;
                         // 设置default
                         conf.default = defaultData.$;
+                        if (defaultData.field) {
+                            if (!conf.default)
+                                conf.default = {};
+                            conf.default.fields = defaultData.field.map(function (field) { return field.$; });
+                        }
                         // 设置extra
                         conf.extra = [];
                         for (var _i = 0, extraDatas_1 = extraDatas; _i < extraDatas_1.length; _i++) {
@@ -117,6 +126,8 @@ function parserConfig(root) {
                                 comment: conf.comment,
                                 file: conf.file,
                                 field: field_1,
+                                default: null,
+                                extra: null,
                                 fields: []
                             };
                             conf[key] = tempConf;

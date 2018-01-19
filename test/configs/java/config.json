@@ -1,0 +1,76 @@
+{
+  "types": [
+    {
+      "from": "byte",
+      "to": "Byte",
+      "class": "basic"
+    },
+    {
+      "from": "short",
+      "to": "Short",
+      "class": "basic"
+    },
+    {
+      "from": "int",
+      "to": "Integer",
+      "class": "basic"
+    },
+    {
+      "from": "long",
+      "to": "Long",
+      "class": "basic"
+    },
+    {
+      "from": "float",
+      "to": "Float",
+      "class": "basic"
+    },
+    {
+      "from": "double",
+      "to": "Double",
+      "class": "basic"
+    },
+    {
+      "from": "string",
+      "to": "String",
+      "class": "basic"
+    },
+    {
+      "from": "boolean",
+      "to": "Boolean",
+      "class": "basic"
+    },
+    {
+      "from": "any",
+      "to": "Object",
+      "class": "basic"
+    },
+    {
+      "from": "(\\w+)\\[\\]",
+      "to": "List<$1>",
+      "class": "array"
+    },
+    {
+      "from": "{(\\w+):(\\w+)}",
+      "to": "Map<$1, $2>",
+      "class": "map"
+    }
+  ],
+  "templates": [
+    {
+      "field": "message",
+      "file": "request.tpl",
+      "saveName": "utopia-service/utopia-wonderland/utopia-wonderland-api/src/main/java/com/voxlearning/utopia/service/wonderland/api/vo/dreamcareer/$a-{field}/$a-{name}Request.java"
+    },
+    {
+      "field": "response",
+      "file": "response.tpl",
+      "saveName": "utopia-service/utopia-wonderland/utopia-wonderland-api/src/main/java/com/voxlearning/utopia/service/wonderland/api/vo/dreamcareer/$a-{field}/$a-{name}Response.java"
+    },
+    {
+      "field": "type",
+      "file": "type.tpl",
+      "saveName": "utopia-service/utopia-wonderland/utopia-wonderland-api/src/main/java/com/voxlearning/utopia/service/wonderland/api/vo/dreamcareer/$a-{field}/$a-{name}.java"
+    }
+  ]
+}

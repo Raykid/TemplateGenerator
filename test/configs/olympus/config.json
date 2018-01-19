@@ -1,0 +1,81 @@
+{
+  "types": [
+    {
+      "from": "byte",
+      "to": "number",
+      "class": "basic"
+    },
+    {
+      "from": "short",
+      "to": "number",
+      "class": "basic"
+    },
+    {
+      "from": "int",
+      "to": "number",
+      "class": "basic"
+    },
+    {
+      "from": "long",
+      "to": "string",
+      "class": "basic"
+    },
+    {
+      "from": "float",
+      "to": "number",
+      "class": "basic"
+    },
+    {
+      "from": "double",
+      "to": "number",
+      "class": "basic"
+    },
+    {
+      "from": "string",
+      "to": "string",
+      "class": "basic"
+    },
+    {
+      "from": "boolean",
+      "to": "boolean",
+      "class": "basic"
+    },
+    {
+      "from": "any",
+      "to": "any",
+      "class": "basic"
+    },
+    {
+      "from": "(\\w+)\\[\\]",
+      "to": "$1[]",
+      "class": "array"
+    },
+    {
+      "from": "{(\\w+):(\\w+)}",
+      "to": "{[key:$1]:$2}",
+      "class": "map"
+    }
+  ],
+  "templates": [
+    {
+      "field": "message",
+      "file": "request.tpl",
+      "saveName": "net/request/$a-{name}Request.ts"
+    },
+    {
+      "field": "response",
+      "file": "response.tpl",
+      "saveName": "net/response/$a-{name}Response.ts"
+    },
+    {
+      "field": "type",
+      "file": "type.tpl",
+      "saveName": "net/type/$a-{name}.ts"
+    },
+    {
+      "field": "global",
+      "file": "import.tpl",
+      "saveName": "net/Import.d.ts"
+    }
+  ]
+}

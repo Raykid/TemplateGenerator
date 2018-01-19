@@ -38,6 +38,10 @@ export function parserConfig(root:string):ConfigDict
                     conf.file = fileName;
                     // 添加所属域名
                     conf.field = field;
+                    // 添加默认配置
+                    conf.default = tempConf.default;
+                    // 添加自主配置
+                    conf.extra = exConf;
                     // 推入conf数组
                     confs.push(conf);
                 }
@@ -64,6 +68,11 @@ export function parserConfig(root:string):ConfigDict
                         let extraDatas:any = fieldData.extra[0].item;
                         // 设置default
                         conf.default = defaultData.$;
+                        if(defaultData.field)
+                        {
+                            if(!conf.default) conf.default = {};
+                            conf.default.fields = defaultData.field.map(field=>field.$);
+                        }
                         // 设置extra
                         conf.extra = [];
                         for(let extraData of extraDatas)
@@ -125,6 +134,8 @@ export function parserConfig(root:string):ConfigDict
                                 comment: conf.comment,
                                 file: conf.file,
                                 field: field,
+                                default: null,
+                                extra: null,
                                 fields: []
                             };
                             conf[key] = tempConf;
@@ -201,6 +212,10 @@ export interface Config
     file:string;
     /** 消息所属域名 */
     field:string;
+    /** 默认配置 */
+    default:Config;
+    /** 自主配置 */
+    extra:Config;
     /** 子域数组 */
     fields:ConfigField[];
 }

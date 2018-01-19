@@ -1,3 +1,6 @@
+<h3>
+    <img class="editor-inline-macro" src="/plugins/servlet/confluence/placeholder/macro?definition=e3RvY30&amp;locale=zh_CN&amp;version=2" data-macro-name="toc">
+</h3>
 <h3>所有返回都会拥有的通用字段</h3>
 <table class="confluenceTable">
   <tbody>
@@ -22,9 +25,9 @@
       <td class="confluenceTd" colspan="1">success是false时表示错误信息</td>
     </tr>
     <tr>
-      <td class="confluenceTd" colspan="1"><pre>sys_time</pre></td>
+      <td class="confluenceTd" colspan="1"><pre>currentTime</pre></td>
       <td class="confluenceTd" colspan="1">long</td>
-      <td class="confluenceTd" colspan="1">消息返回时刻的服务器时间戳，目前只有PHP服务器支持此字段的统一返回，请注意</td>
+      <td class="confluenceTd" colspan="1">当前的服务器时间戳（毫秒）</td>
     </tr>
   </tbody>
 </table>
@@ -69,7 +72,8 @@ $a-{if: msg.fields.length > 0}
 </table>
 $a-{end if}
 <p>3）返回类型：<span style="color: #000000;">$a-{msg.response.name}</span></p>
-<p>4）返回参数：</p>
+<p>4）返回参数：$a-{if: msg.response.fields.length <= 0}无$a-{end if}</p>
+$a-{if: msg.response.fields.length > 0}
 <table class="confluenceTable">
   <tbody>
     <tr>
@@ -91,7 +95,7 @@ $a-{end if}
 				// 基础类型
 				if(type.class == "basic") return type.to;
 				// 其他类型
-				var config = getConfigByName(type.customName);
+				var config = getConfigByName("type", type.customName);
 				var tempArr = [];
 				if(config.fields != null)
 				{
@@ -105,7 +109,7 @@ $a-{end if}
 						</tr>`);
 					}
 				}
-				var res = `<table class="confluenceTable">
+				var res = getCustomNames([{type:type}]).length == 0 ? "" : `<table class="confluenceTable">
 				  <tbody>
 					<tr>
 					  <th class="confluenceTh">字段</th>
@@ -128,4 +132,5 @@ $a-{end if}
 	$a-{end for}
   </tbody>
 </table>
+$a-{end if}
 $a-{end for}
