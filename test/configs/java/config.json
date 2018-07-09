@@ -46,7 +46,7 @@
       "class": "basic"
     },
     {
-      "from": "(\\w+)\\[\\]",
+      "from": "(.+)\\[\\]",
       "to": "List<$1>",
       "class": "array"
     },

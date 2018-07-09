@@ -174,6 +174,7 @@ function filterConfigs(configDict, include, exclude) {
                 // 白名单存在，那么在白名单里就用，不在就不用
                 return (include.indexOf(conf.file) >= 0);
             }
+            // 然后判断黑名单
             else {
                 // 在就不用，不在就用
                 return (!exclude || exclude.indexOf(conf.file) < 0);

@@ -1,0 +1,34 @@
+<config>
+    <message>
+        <default method="GET" response="response->$a-{name}" protocol="http" comment="" domainindex="0"
+                 contentType="application/x-www-form-urlencoded"/>
+        <extra>
+            <item name="ResourceVersion" method="POST" url="/studentMobile/growingworld/config/resourceversion.vpage"
+                  comment="获取配置表版本">
+                <field name="tableNames" type="string[]" comment="请求数据表列表"/>
+            </item>
+        </extra>
+    </message>
+    <response>
+        <default>
+			<field name="success" type="boolean" comment="返回值时表示是否成功"/>
+			<field name="errorCode" type="int" comment="success是false时表示错误码"/>
+			<field name="info" type="string" comment="success是false时表示错误信息"/>
+			<field name="currentTime" type="long" comment="当前的服务器时间戳（毫秒）"/>
+		</default>
+        <extra>
+            <item name="ResourceVersion" comment="获取配置表版本">
+                <field name="resourceConfigList" type="ResourceConfigVO[]" comment="配置表版本信息"/>
+            </item>
+        </extra>
+    </response>
+    <type>
+        <default/>
+        <extra>
+            <item name="TestVO" comment="TestVO">
+                <field name="testMap" type="{string:int}" comment="奖励物品及数量"/>
+                <field name="testMapList" type="{string:int}[]" comment="奖励物品及数量"/>
+            </item>
+        </extra>
+    </type>
+</config>
