@@ -6,17 +6,15 @@ import configParser = require("./config/ConfigParser");
 import templateReplacer = require("./template/TemplateReplacer");
 import fileSystemUtil = require("./file/FileSystemUtil");
 
-// 获取进程参数
-let args:string[] = process.argv.slice(2);
-// 调用方法
-run(...args);
-
-export function run(...args:string[]):void
+if(process.argv.length > 2)
 {
-    let root:string = args[0];
-    let out:string = args[1];
+    // 调用方法
+    run(process.argv[2], process.argv[3], ...process.argv.slice(4));
+}
+
+export function run(root:string, out:string, ...langs:string[]):void
+{
     // 首先读取语言配置
-    var langs:string[] = args.slice(2);
     let langConfigs:langParser.Lang[] = langParser.parseConfig(root, langs);
     // 日志
     console.log(`语言配置读取完毕`);
