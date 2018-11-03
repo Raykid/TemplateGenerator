@@ -2,15 +2,16 @@
   "name": "template_generator",
   "version": "1.0.0",
   "main": "index.js",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "ts-loader": "^2.0.2",
     "typescript": "^2.2.1",
     "uglify-js-plugin": "0.0.6",
     "webpack": "^2.2.1"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config ./build/webpack.config.js",
+    "test": "node ./dist/TemplateGenerator.js ./test ./out olympus java wiki"
   },
   "author": "Raykid",
   "license": "ISC",

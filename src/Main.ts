@@ -10,13 +10,6 @@ import fileSystemUtil = require("./file/FileSystemUtil");
 // 获取进程参数
 let args:string[] = process.argv.slice(2);
 
-// 下面打开就是测试代码
-// if(args.length <= 0) args = [
-//     path.resolve(__dirname, "../test"),
-//     path.resolve(__dirname, "../out"),
-//     "olympus"
-// ];
-
 let root:string = args[0];
 let out:string = args[1];
 // 首先读取语言配置
