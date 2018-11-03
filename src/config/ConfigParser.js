@@ -1,5 +1,4 @@
 "use strict";
-/// <reference path="../../libs/xml2js/index.d.ts"/>
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by Raykid on 2017/3/17.

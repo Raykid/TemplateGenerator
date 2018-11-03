@@ -1,5 +1,3 @@
-/// <reference path="../../libs/xml2js/index.d.ts"/>
-
 /**
  * Created by Raykid on 2017/3/17.
  */

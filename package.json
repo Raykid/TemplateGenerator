@@ -1,8 +1,15 @@
 {
   "name": "template_generator",
-  "version": "1.0.0",
-  "main": "index.js",
-  "dependencies": {},
+  "version": "0.0.2",
+  "main": "./src/Main.js",
+  "files": [
+    "dist",
+    "libs/",
+    "src/**/*.js"
+  ],
+  "dependencies": {
+    "xml2js": "^0.4.19"
+  },
   "devDependencies": {
     "ts-loader": "^2.0.2",
     "typescript": "^2.2.1",
@@ -13,7 +20,7 @@
     "build": "webpack --config ./build/webpack.config.js",
     "test": "node ./dist/TemplateGenerator.js ./test ./out olympus java wiki"
   },
-  "author": "Raykid",
+  "author": "raykid13",
   "license": "ISC",
   "description": "Generate files from your templates and configs",
   "repository": {
