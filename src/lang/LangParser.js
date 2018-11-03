@@ -46,4 +46,3 @@ function parseConfig(root, langs) {
     return configs;
 }
 exports.parseConfig = parseConfig;
-//# sourceMappingURL=LangParser.js.map

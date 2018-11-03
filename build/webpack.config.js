@@ -20,13 +20,13 @@ module.exports = {
     },
     plugins: [
         //压缩打包的文件
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            },
-            output: {
-                comments: false
-            }
-        })
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     },
+        //     output: {
+        //         comments: false
+        //     }
+        // })
     ]
 }

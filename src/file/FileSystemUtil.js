@@ -72,4 +72,3 @@ function saveFile(base, lang, name, content) {
     fs.writeFileSync(url, content);
 }
 exports.saveFile = saveFile;
-//# sourceMappingURL=FileSystemUtil.js.map
