@@ -1,6 +1,6 @@
 {
-  "name": "template_generator",
-  "version": "0.0.2",
+  "name": "template-generator-r",
+  "version": "0.0.1",
   "main": "./src/Main.js",
   "files": [
     "dist",
